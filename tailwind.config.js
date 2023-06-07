@@ -10,8 +10,8 @@ export default {
   plugins: [require("daisyui")],
   daisyui: {
     themes: [
-      "luxury",
-      "light"
+      "forest",
+      "winter"
     ],
   }
 };
