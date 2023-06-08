@@ -98,12 +98,12 @@ const Header = () => {
             </svg>
           </label>
           {user && (
-            <div className="tooltip tooltip-left" data-tip={user.displayName}>
+            <div className="tooltip tooltip-left cursor-pointer group" data-tip={user.displayName}>
               <button>
                 <PhotoProvider className="rounded-xl">
                   <PhotoView src={user.photoURL}>
                     <img
-                      className="w-10 mt-2 rounded-xl"
+                      className="w-10 mt-2 rounded-xl group-hover:scale-125   transition"
                       src={user.photoURL}
                       alt={user.displayName}
                     />

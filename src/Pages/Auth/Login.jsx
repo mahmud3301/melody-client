@@ -16,8 +16,7 @@ const Login = () => {
   const { signIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const from = searchParams.get("from") || "/";
+  const from = location.state?.from?.pathname || "/";
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -29,19 +28,18 @@ const Login = () => {
 
   const handleLogin = (data) => {
     const { email, password } = data;
-  
+
     if (!email || !password) {
       setError("Please fill in all the fields");
       return;
     }
-  
+
     signIn(email, password)
       .then((result) => {
         const loggedUser = result.user;
         console.log(loggedUser);
         navigate(from, { replace: true });
-  
-        // Show SweetAlert when user is logged in
+
         Swal.fire({
           title: "Login Successful",
           text: "You have successfully logged in.",
@@ -54,17 +52,16 @@ const Login = () => {
         setError("Invalid email or password");
       });
   };
-  
 
   const handleGoogleLogin = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
-        const user = result.user;
+        const { user } = result;
         console.log(user);
         navigate(from, { replace: true });
-  
+
         Swal.fire({
-          title: "User Created",
+          title: "Login Successful",
           text: "Congratulations! Your account has been created successfully.",
           icon: "success",
           confirmButtonText: "OK",
@@ -87,7 +84,10 @@ const Login = () => {
               <img className="w-96 mb-8" src={loginPng} alt="" />
             </p>
           </div>
-          <form data-aos="fade-right" className="w-full" onSubmit={handleSubmit(handleLogin)}>
+          <form
+            data-aos="fade-right"
+            className="w-full"
+            onSubmit={handleSubmit(handleLogin)}>
             <div className="card flex-shrink-0 mr-0 lg:mr-16 shadow-2xl bg-base-100">
               <div className="card-body">
                 <div className="form-control">
@@ -101,7 +101,9 @@ const Login = () => {
                     className="input input-bordered"
                     {...register("email", { required: "Email is required" })}
                   />
-                  {errors.email && <p className="text-error">{errors.email.message}</p>}
+                  {errors.email && (
+                    <p className="text-error">{errors.email.message}</p>
+                  )}
                 </div>
                 <div className="form-control">
                   <label className="label">
@@ -113,16 +115,19 @@ const Login = () => {
                       name="password"
                       placeholder="Password"
                       className="input input-bordered w-full"
-                      {...register("password", { required: "Password is required" })}
+                      {...register("password", {
+                        required: "Password is required",
+                      })}
                     />
                     <div
                       className="absolute right-0 mr-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
+                      onClick={() => setShowPassword(!showPassword)}>
                       {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
                     </div>
                   </div>
-                  {errors.password && <p className="text-error">{errors.password.message}</p>}
+                  {errors.password && (
+                    <p className="text-error">{errors.password.message}</p>
+                  )}
                 </div>
 
                 <p className="mt-4">
@@ -139,7 +144,9 @@ const Login = () => {
               <div className="divider">OR Login With</div>
               <div className="card-body justify-center mx-auto">
                 <div>
-                  <button onClick={handleGoogleLogin} className="btn btn-primary">
+                  <button
+                    onClick={handleGoogleLogin}
+                    className="btn btn-primary">
                     <FaGoogle />
                   </button>
                 </div>

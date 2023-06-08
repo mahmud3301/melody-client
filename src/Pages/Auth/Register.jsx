@@ -1,6 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { GoogleAuthProvider, getAuth, signInWithPopup, updateProfile } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  getAuth,
+  signInWithPopup,
+  updateProfile,
+} from "firebase/auth";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useForm } from "react-hook-form";
 import registerPng from "../../assets/login.png";
@@ -8,9 +13,6 @@ import { AuthContext } from "../../provider/AuthProvider";
 import { app } from "../../firebase/firebase.config";
 import { FaGoogle } from "react-icons/fa";
 import Swal from "sweetalert2";
-
-const capitalLetterRegex = /^(?=.*[A-Z])/;
-const specialCharacterRegex = /^(?=.*[!@#$%^&*])/;
 
 const Register = () => {
   const auth = getAuth(app);
@@ -20,8 +22,9 @@ const Register = () => {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
   const [error, setError] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [capitalLetterError, setCapitalLetterError] = useState(false);
+  const [specialCharacterError, setSpecialCharacterError] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
@@ -43,19 +46,27 @@ const Register = () => {
 
   const handleRegister = (formData) => {
     const { name, url, email, password } = formData;
-  
+
+    // Validate password length
     if (password.length < 6) {
       setPasswordError("Password must be at least 6 characters");
       return;
     }
-  
-    if (!name || !email || !password) {
-      setError("Please fill in all the fields");
+
+    // Validate password has a capital letter
+    if (!/[A-Z]/.test(password)) {
+      setCapitalLetterError(true);
       return;
     }
-  
+
+    // Validate password has a special character
+    if (!/[!@#$%^&*]/.test(password)) {
+      setSpecialCharacterError(true);
+      return;
+    }
+
     if (password !== confirmPassword) {
-      setPasswordError("Password and Confirm Password do not match");
+      setPasswordError("Passwords do not match");
       return;
     }
 
@@ -86,10 +97,10 @@ const Register = () => {
   const handleGoogleRegister = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
-        const user = result.user;
+        const { user } = result;
         console.log(user);
         navigate(from, { replace: true });
-  
+
         Swal.fire({
           title: "User Created",
           text: "Congratulations! Your account has been created successfully.",
@@ -138,7 +149,9 @@ const Register = () => {
                     className="input input-bordered"
                   />
                   {errors.name && (
-                    <span className="error-message text-error">Name is required</span>
+                    <span className="error-message text-error">
+                      Name is required
+                    </span>
                   )}
                 </div>
                 <div className="form-control">
@@ -152,7 +165,9 @@ const Register = () => {
                     className="input input-bordered"
                   />
                   {errors.email && (
-                    <span className="error-message text-error">Email is required</span>
+                    <span className="error-message text-error">
+                      Email is required
+                    </span>
                   )}
                 </div>
                 <div className="form-control">
@@ -165,16 +180,6 @@ const Register = () => {
                       {...register("password", {
                         required: true,
                         minLength: 6,
-                        pattern: {
-                          value: capitalLetterRegex,
-                          message:
-                            "Password must contain at least one capital letter",
-                        },
-                        validate: {
-                          hasSpecialCharacter: (value) =>
-                            specialCharacterRegex.test(value) ||
-                            "Password must contain at least one special character",
-                        },
                       })}
                       placeholder="Password"
                       className={`input w-full input-bordered ${
@@ -183,16 +188,33 @@ const Register = () => {
                     />
                     <div
                       className="absolute right-0 mr-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
-                      onClick={handleShowPassword}
-                    >
+                      onClick={handleShowPassword}>
                       {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
                     </div>
                   </div>
                   {errors.password && (
                     <span className="error-message text-error">
-                      {errors.password.message}
+                      Password is required and must be at least 6 characters
+                      long
                     </span>
                   )}
+                  {capitalLetterError && (
+                    <span className="error-message text-error">
+                      Password must contain at least one capital letter
+                    </span>
+                  )}
+                  {specialCharacterError && (
+                    <span className="error-message text-error">
+                      Password must contain at least one special character
+                    </span>
+                  )}
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Password</span>
+                  </label>
+                  <div className="relative">{/* ... */}</div>
+                  {/* ... */}
                 </div>
                 <div className="form-control">
                   <label className="label">
@@ -200,21 +222,34 @@ const Register = () => {
                   </label>
                   <div className="relative">
                     <input
+                      {...register("confirmPassword", {
+                        required: true,
+                      })}
                       type={showPassword ? "text" : "password"}
                       name="confirmPassword"
                       placeholder="Confirm Password"
-                      className="input input-bordered w-full"
+                      className={`input input-bordered w-full ${
+                        errors.confirmPassword ? "input-error" : ""
+                      }`}
                       value={confirmPassword}
                       onChange={handleConfirmPasswordChange}
                     />
                     <div
                       className="absolute right-0 mr-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
-                      onClick={handleShowPassword}
-                    >
+                      onClick={handleShowPassword}>
                       {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
                     </div>
                   </div>
-                    <span className="error-message text-error">{passwordError}</span>
+                  {errors.confirmPassword && (
+                    <span className="error-message text-error">
+                      Confirm Password is required
+                    </span>
+                  )}
+                  {passwordError && (
+                    <span className="error-message text-error">
+                      {passwordError}
+                    </span>
+                  )}
                 </div>
                 <div className="form-control">
                   <label className="label">
@@ -222,10 +257,17 @@ const Register = () => {
                   </label>
                   <input
                     type="url"
-                    {...register("url")}
+                    {...register("url", {
+                      required: true,
+                    })}
                     placeholder="Photo Url"
                     className="input input-bordered"
                   />
+                  {errors.url && (
+                    <span className="error-message text-error">
+                      Photo Urls is required
+                    </span>
+                  )}
                 </div>
                 <p className="mt-4">
                   Already have an account?{" "}
@@ -241,8 +283,7 @@ const Register = () => {
                   <div>
                     <button
                       onClick={handleGoogleRegister}
-                      className="btn btn-primary"
-                    >
+                      className="btn btn-primary">
                       <FaGoogle />
                     </button>
                   </div>
