@@ -31,11 +31,56 @@ const Header = () => {
     <div>
       <nav className="navbar bg-base-300">
         <div className="navbar-start">
+          <div className="dropdown">
+            <label tabIndex={0} className="btn btn-ghost lg:hidden">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />
+              </svg>
+            </label>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+              <li>
+                <NavLink exact className="" to="/" activeClassName="">
+                  Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink className="" to="/instructors" activeClassName="">
+                  Instructors
+                </NavLink>
+              </li>
+              <li>
+                <NavLink className="" to="/classes" activeClassName="">
+                  Classes
+                </NavLink>
+              </li>
+              {user && (
+                <>
+                  <li>
+                    <NavLink className="" to="/dashboard" activeClassName="">
+                      Dashboard
+                    </NavLink>
+                  </li>
+                </>
+              )}
+            </ul>
+          </div>
           <div className="flex items-center">
             <NavLink to="/" className="btn btn-ghost btn-square mt-1 ml-3">
               <div className="w-20 rounded-full">
                 <img
-                className="h-[3rem]"
+                  className="h-[3rem]"
                   src="https://www.transparentpng.com/thumb/guitar/digital-wooden-acoustic-guitar-clipart-transparent-CE2sdi.png"
                   alt=""
                 />
@@ -98,7 +143,9 @@ const Header = () => {
             </svg>
           </label>
           {user && (
-            <div className="tooltip tooltip-left cursor-pointer group" data-tip={user.displayName}>
+            <div
+              className="tooltip tooltip-left cursor-pointer group"
+              data-tip={user.displayName}>
               <button>
                 <PhotoProvider className="rounded-xl">
                   <PhotoView src={user.photoURL}>

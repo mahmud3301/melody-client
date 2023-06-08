@@ -19,9 +19,9 @@ const PopularClassesSection = () => {
     <div>
       <div className="py-8">
         <h2 className="text-3xl text-center font-bold my-14">
-          Popular <span className="text-primary">Classes</span>
+          Popular <span className="text-primary">Courses</span>
         </h2>
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-3 lg:px-36">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-3 px-8 lg:px-36">
           {topClasses.map((classItem) => (
             <div key={classItem._id} className="mb-5 h-full cursor-pointer group transition">
               <div className="card w-full glass bg-base-200">
