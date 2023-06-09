@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
+import useCart from "../../Components/useCart";
 
 const Classes = () => {
   const { user } = useContext(AuthContext);
@@ -16,22 +17,21 @@ const Classes = () => {
   }, []);
 
   const handleAddToCart = (classItem) => {
-    const courseItem = {
-      _id: classItem._id,
-      name: classItem.name,
-      price: classItem.price,
-      instructor: classItem.instructor,
-      students: classItem.students,
-      availableSeats: classItem.availableSeats,
-      image: classItem.image,
-      email: user.email,
-    };
-
+    console.log(classItem);
     if (user && user.email) {
-      fetch(`http://localhost:5000/carts`, {
+      const courseItem = {
+        name: classItem.name,
+        price: classItem.price,
+        instructor: classItem.instructor,
+        students: classItem.students,
+        availableSeats: classItem.availableSeats,
+        image: classItem.image,
+        email: user.email,
+      };
+      fetch("http://localhost:5000/carts", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "content-type": "application/json",
         },
         body: JSON.stringify(courseItem),
       })
@@ -41,7 +41,7 @@ const Classes = () => {
             Swal.fire({
               position: "top-end",
               icon: "success",
-              title: "Course added to the cart.",
+              title: "Food added on the cart.",
               showConfirmButton: false,
               timer: 1500,
             });
@@ -49,7 +49,7 @@ const Classes = () => {
         });
     } else {
       Swal.fire({
-        title: "Please login to order the course",
+        title: "Please login to order the food",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -65,8 +65,8 @@ const Classes = () => {
 
   return (
     <div>
-      <div className="py-8">
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-3 lg:px-36">
+      <div className="py-8 px-8 lg:px-36">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {data.map((classItem) => (
             <div
               key={classItem.name}

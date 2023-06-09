@@ -8,12 +8,13 @@ import Instructors from "../Pages/Instructors/Instractors";
 import Classes from "../Pages/Classes/Classes";
 import PrivateRoute from "./PrivateRoute";
 import DashboardLayout from "../Layouts/DashboardLayout";
+import SelectedCourse from "../Pages/Dashboard/SelectedCourse";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
-    errorElement: <Error />,
+    // errorElement: <Error />,
     children: [
       {
         path: "/",
@@ -38,12 +39,18 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "dashboard",
+    path: "/dashboard",
     element: (
       <PrivateRoute>
         <DashboardLayout />
       </PrivateRoute>
     ),
+    children: [
+      {
+        path: "/dashboard/selected-course",
+        element: <SelectedCourse/>,
+      }
+    ]
   },
 ]);
 

@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
+import useCart from "../Components/useCart";
 
 const Header = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -49,7 +50,7 @@ const Header = () => {
             </label>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+              className="z-10 menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-300 rounded-box w-52">
               <li>
                 <NavLink exact className="" to="/" activeClassName="">
                   Home
@@ -68,7 +69,7 @@ const Header = () => {
               {user && (
                 <>
                   <li>
-                    <NavLink className="" to="/dashboard" activeClassName="">
+                    <NavLink className="" to="/dashboard/selected-course" activeClassName="">
                       Dashboard
                     </NavLink>
                   </li>
@@ -88,7 +89,7 @@ const Header = () => {
             </NavLink>
             <NavLink
               to="/"
-              className="font-bold text-xl hidden lg:block "
+              className="font-bold text-xl hidden md:block lg:block"
               activeClassName="">
               Melody
             </NavLink>
@@ -114,7 +115,7 @@ const Header = () => {
             {user && (
               <>
                 <li>
-                  <NavLink className="" to="/dashboard" activeClassName="">
+                  <NavLink className="" to="/dashboard/selected-course" activeClassName="">
                     Dashboard
                   </NavLink>
                 </li>
@@ -150,7 +151,7 @@ const Header = () => {
                 <PhotoProvider className="rounded-xl">
                   <PhotoView src={user.photoURL}>
                     <img
-                      className="w-10 mt-2 rounded-xl group-hover:scale-125   transition"
+                      className="w-10 mt-2 rounded-xl group-hover:scale-125  transition"
                       src={user.photoURL}
                       alt={user.displayName}
                     />

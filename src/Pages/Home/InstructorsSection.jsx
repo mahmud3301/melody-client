@@ -24,7 +24,7 @@ const InstructorsSection = () => {
       <h2 className="text-3xl text-center font-bold my-14">
         Popular <span className="text-primary">Instructors</span>
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-8 lg:px-36">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 px-8 lg:px-36">
         {sortedInstructors.map((instructor, index) => (
           <div
             key={index}

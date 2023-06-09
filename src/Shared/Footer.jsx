@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <div>
       <footer className="footer p-10 bg-base-300 mt-28">
-        <div className="md:ml-64">
+        <div className="md:ml-28 lg:ml-64">
           <NavLink to="/" className="mt-1 ml-1">
             <div className="rounded-full">
               <img className="w-24 h-28 mb-4"
@@ -29,7 +29,7 @@ const Footer = () => {
           </p>
         </div>
         <div>
-          <span className="footer-title mt-0 lg:mt-[69%]">Social</span>
+          <span className="footer-title mt-0 md:mt-[76%] lg:mt-[76%]">Social</span>
           <div className="grid grid-flow-col gap-0">
             <div className="btn-circle text-xl">
               <a target="_blank" href="https://www.facebook.com/mahmudulhasan13.1.8.9">

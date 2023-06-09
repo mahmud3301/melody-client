@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Error = () => {
   return (
-    <div className="bg-[#000] py-[5%] items-center min-h-screen">
+    <div className="bg-base-300 py-[5%] items-center min-h-screen">
       <div>
         <img
           className="mx-auto justify-center items-center mt-[55%] lg:mt-0"
