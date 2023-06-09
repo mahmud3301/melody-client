@@ -69,7 +69,7 @@ const Header = () => {
               {user && (
                 <>
                   <li>
-                    <NavLink className="" to="/dashboard/selected-course" activeClassName="">
+                    <NavLink className="" to="/dashboard" activeClassName="">
                       Dashboard
                     </NavLink>
                   </li>
@@ -115,7 +115,7 @@ const Header = () => {
             {user && (
               <>
                 <li>
-                  <NavLink className="" to="/dashboard/selected-course" activeClassName="">
+                  <NavLink className="" to="/dashboard" activeClassName="">
                     Dashboard
                   </NavLink>
                 </li>

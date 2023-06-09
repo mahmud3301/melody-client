@@ -47,6 +47,10 @@ const Register = () => {
 
   const handleRegister = (formData) => {
     const { name, url, email, password } = formData;
+    const saveUser = {
+      name,
+      email,
+    };
 
     // Validate password length
     if (password.length < 6) {
@@ -76,15 +80,27 @@ const Register = () => {
         const createdUser = userCredential.user;
         updateProfile(createdUser, { displayName: name, photoURL: url })
           .then(() => {
-            console.log("Profile updated!");
-            navigate(from, { replace: true });
+            fetch("http://localhost:5000/user", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(saveUser),
+            })
+              .then(() => {
+                console.log("Profile updated!");
+                navigate(from, { replace: true });
 
-            Swal.fire({
-              title: "User Created",
-              text: "Congratulations! Your account has been created successfully.",
-              icon: "success",
-              confirmButtonText: "OK",
-            });
+                Swal.fire({
+                  title: "User Created",
+                  text: "Congratulations! Your account has been created successfully.",
+                  icon: "success",
+                  confirmButtonText: "OK",
+                });
+              })
+              .catch((error) => {
+                console.log("Error updating profile:", error);
+              });
           })
           .catch((error) => {
             console.log("Error updating profile:", error);
@@ -99,15 +115,34 @@ const Register = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         const { user } = result;
-        console.log(user);
-        navigate(from, { replace: true });
 
-        Swal.fire({
-          title: "User Created",
-          text: "Congratulations! Your account has been created successfully.",
-          icon: "success",
-          confirmButtonText: "OK",
-        });
+        const { displayName, email, photoURL } = user;
+        const saveUser = {
+          name: displayName,
+          email,
+        };
+
+        fetch("http://localhost:5000/user", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(saveUser),
+        })
+          .then(() => {
+            console.log("Profile updated!");
+            navigate(from, { replace: true });
+
+            Swal.fire({
+              title: "User Created",
+              text: "Congratulations! Your account has been created successfully.",
+              icon: "success",
+              confirmButtonText: "OK",
+            });
+          })
+          .catch((error) => {
+            console.log("Error updating profile:", error);
+          });
       })
       .catch((error) => {
         console.error(error);

@@ -7,7 +7,7 @@ import { AuthContext } from "../../provider/AuthProvider";
 import { useContext } from "react";
 
 const SelectedCourse = () => {
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [cart, refetch] = useCart();
 
   const handleDelete = (data) => {
@@ -39,9 +39,17 @@ const SelectedCourse = () => {
     <div className="w-full h-full mt-24">
       <Helmet>
         <title>Melody | My Selected Classes</title>
-        </Helmet>
+      </Helmet>
 
-        <p className="text-5xl font-bold text-center underline mb-12">Welcome!! <span className="text-primary">{user.displayName}</span></p>
+      <div className="grid grid-cols-2 justify-between items-center">
+        <p className="text-5xl font-bold text-center underline mb-12 ">
+          Welcome!! <span className="text-primary">{user.displayName}</span>
+        </p>
+        <img
+          className="mask mask-squircle w-32 mb-5 justify-end ml-[50%] lg:ml-[75%]"
+          src={user.photoURL}
+        />
+      </div>
 
       {cart.length > 0 ? (
         <>

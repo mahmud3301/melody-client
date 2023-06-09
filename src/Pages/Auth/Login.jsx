@@ -9,6 +9,7 @@ import loginPng from "../../assets/login.png";
 import { AuthContext } from "../../provider/AuthProvider";
 import { app } from "../../firebase/firebase.config";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const auth = getAuth(app);
@@ -57,15 +58,34 @@ const Login = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         const { user } = result;
-        console.log(user);
-        navigate(from, { replace: true });
 
-        Swal.fire({
-          title: "Login Successful",
-          text: "Congratulations! Your account has been created successfully.",
-          icon: "success",
-          confirmButtonText: "OK",
-        });
+        const { displayName, email, photoURL } = user;
+        const saveUser = {
+          name: displayName,
+          email,
+        };
+
+        fetch("http://localhost:5000/user", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(saveUser),
+        })
+          .then(() => {
+            console.log("Profile updated!");
+            navigate(from, { replace: true });
+
+            Swal.fire({
+              title: "Login Successful",
+              text: "Congratulations! Your account has been logged in successfully.",
+              icon: "success",
+              confirmButtonText: "OK",
+            });
+          })
+          .catch((error) => {
+            console.log("Error updating profile:", error);
+          });
       })
       .catch((error) => {
         console.error(error);
@@ -74,6 +94,9 @@ const Login = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Melody | Login</title>
+      </Helmet>
       <h1 data-aos="fade-down" className="text-5xl font-bold text-center mt-28">
         <span className="text-primary">Login</span> now!
       </h1>
