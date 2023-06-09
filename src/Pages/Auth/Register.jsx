@@ -13,6 +13,7 @@ import { AuthContext } from "../../provider/AuthProvider";
 import { app } from "../../firebase/firebase.config";
 import { FaGoogle } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const Register = () => {
   const auth = getAuth(app);
@@ -125,6 +126,9 @@ const Register = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Melody | Sign Up</title>
+      </Helmet>
       <h1 className="text-5xl font-bold text-center mt-28">
         <span className="text-primary">Register</span> now!
       </h1>

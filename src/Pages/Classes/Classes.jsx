@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
-import useCart from "../../Components/useCart";
+import { Helmet } from "react-helmet-async";
 
 const Classes = () => {
   const { user } = useContext(AuthContext);
@@ -41,7 +41,7 @@ const Classes = () => {
             Swal.fire({
               position: "top-end",
               icon: "success",
-              title: "Food added on the cart.",
+              title: "Class added on the cart.",
               showConfirmButton: false,
               timer: 1500,
             });
@@ -65,6 +65,9 @@ const Classes = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Melody | Classes</title>
+      </Helmet>
       <div className="py-8 px-8 lg:px-36">
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {data.map((classItem) => (
@@ -104,10 +107,10 @@ const Classes = () => {
                   </p>
                   <div className="card-actions justify-end">
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-primary font-bold"
                       disabled={classItem.availableSeats === 0}
                       onClick={() => handleAddToCart(classItem)}>
-                      Book Now !!!
+                      Select !!!
                     </button>
                   </div>
                 </div>

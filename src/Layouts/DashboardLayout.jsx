@@ -33,12 +33,12 @@ const DashboardLayout = () => {
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
           <ul className="menu p-4 w-80 h-full bg-base-200 text-base-content">
             <li>
-              <NavLink activeClassName="" className="text-lg font-medium mb-5 mt-9">
+              <NavLink to='/dashboard/selected-course' activeClassName="" className="text-lg font-medium mb-5 mt-9">
                 <FaBook className="text-primary" /> My Selected Classes
               </NavLink>
             </li>
             <li>
-              <NavLink activeClassName="" className="text-lg font-medium mb-3">
+              <NavLink to='/dashboard/my-enrolled-classes' activeClassName="" className="text-lg font-medium mb-3">
                 <FaCartPlus className="text-primary" /> My Enrolled Classes
               </NavLink>
             </li>
