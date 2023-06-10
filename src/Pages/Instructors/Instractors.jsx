@@ -4,23 +4,25 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 
 const Instructors = () => {
-  const [data, setData] = useState([]);
+  const [instructors, setInstructors] = useState([]);
+
   useEffect(() => {
-    // fetch('instructors.json')
     fetch("http://localhost:5000/instructors")
       .then((res) => res.json())
-      .then((data) => setData(data));
+      .then((data) => setInstructors(data));
   }, []);
+
   return (
     <div>
       <Helmet>
         <title>Melody | Instructors</title>
       </Helmet>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-8 lg:px-36 py-24">
-        {data.map((instructor, index) => (
+        {instructors.map((instructor, index) => (
           <div
             key={index}
-            className="card grid grid-cols-1 lg:grid-cols-2 glass bg-base-200 shadow-3xl group transition cursor-pointer">
+            className="card grid grid-cols-1 lg:grid-cols-2 glass bg-base-200 shadow-3xl group transition cursor-pointer"
+          >
             <figure>
               <img
                 className="h-96 w-96 group-hover:scale-125 transition"
@@ -34,16 +36,22 @@ const Instructors = () => {
                 <span className="font-semibold underline">Email</span>:{" "}
                 {instructor.email}
               </p>
-              <p>
-                <span className="underline font-semibold">
-                  Number of Classes
-                </span>
-                : {instructor.numClasses}
-              </p>
-              <p>
-                <span className="underline font-semibold">Classes Taken</span>:{" "}
-                {instructor.classesTaken.join(", ")}
-              </p>
+              {instructor.numClasses && (
+                <p>
+                  <span className="underline font-semibold">
+                    Number of Classes
+                  </span>
+                  : {instructor.numClasses}
+                </p>
+              )}
+              {instructor.classesTaken && (
+                <p>
+                  <span className="underline font-semibold">
+                    Classes Taken
+                  </span>
+                  : {instructor.classesTaken.join(", ")}
+                </p>
+              )}
             </div>
           </div>
         ))}

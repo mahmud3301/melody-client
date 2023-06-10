@@ -49,7 +49,7 @@ const AllUsers = () => {
   };
 
   return (
-    <div>
+    <div className="w-full h-full mt-[50%] text-center">
       <Helmet>
         <title>Melody | All users</title>
       </Helmet>
@@ -58,9 +58,9 @@ const AllUsers = () => {
           <h1 className="text-3xl text-center font-bold mb-6">
             All users: {users.length}
           </h1>
-          <div className="overflow-x-auto w-full">
+          <div className="overflow-x-auto">
             <table className="table shadow-2xl">
-              <thead className="bg-primary">
+              <thead className="bg-primary text-center">
                 <tr>
                   <th className="text-lg font-bold"></th>
                   <th className="text-lg font-bold">#</th>
@@ -69,7 +69,7 @@ const AllUsers = () => {
                   <th className="text-lg font-bold">Users Actions</th>
                 </tr>
               </thead>
-              <tbody className="bg-base-300">
+              <tbody className="bg-base-300 text-center">
                 {users.map((user, index) => (
                   <tr key={user._id}>
                     <th></th>
@@ -77,11 +77,11 @@ const AllUsers = () => {
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>
-                        <button
-                          onClick={() => handleMakeAdmin(user)}
-                          className="btn btn-sm btn-primary">
-                          {user.role === "admin" ? "Admin" : "Make Admin"}
-                        </button>
+                      <button
+                        onClick={() => handleMakeAdmin(user)}
+                        className="btn btn-sm btn-primary">
+                        {user.role === "admin" ? "Admin" : "Make Admin"}
+                      </button>
                       <button
                         onClick={() => handleMakeInstructor(user)}
                         className="btn btn-sm btn-primary ml-20">

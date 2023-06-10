@@ -18,7 +18,10 @@ const Classes = () => {
   useEffect(() => {
     fetch("http://localhost:5000/classes")
       .then((res) => res.json())
-      .then((data) => setData(data));
+      .then((data) => {
+        const sortedClasses = data.sort((a, b) => b.students - a.students);
+        setData(sortedClasses);
+      });
   }, []);
 
   const handleAddToCart = (classItem) => {
@@ -76,15 +79,13 @@ const Classes = () => {
           {data.map((classItem) => (
             <div
               key={classItem.name}
-              className="mb-5 h-full cursor-pointer group transition"
-            >
+              className="mb-5 h-full cursor-pointer group transition">
               <div
                 className={`card w-full ${
                   classItem.availableSeats === 0
                     ? "bg-red-500"
                     : "glass bg-base-200"
-                }`}
-              >
+                }`}>
                 <figure>
                   <img
                     className="h-96 group-hover:scale-125 transition"
@@ -98,7 +99,7 @@ const Classes = () => {
                     <span className="underline font-medium">
                       Instructor Name
                     </span>
-                    : {classItem.instructor}
+                    : {classItem.instructorName}
                   </p>
                   <p>
                     <span className="underline font-medium">
@@ -107,7 +108,13 @@ const Classes = () => {
                     : {classItem.availableSeats}
                   </p>
                   <p>
-                    <span className="underline font-medium">Rate</span>:{" "}
+                    <span className="underline font-medium">
+                      Students
+                    </span>
+                    : {classItem.students}
+                  </p>
+                  <p>
+                    <span className="underline font-medium">Rate</span>: $
                     {classItem.price}
                   </p>
                   <div className="card-actions justify-end">
@@ -115,9 +122,10 @@ const Classes = () => {
                       onClick={() => handleAddToCart(classItem)}
                       className="btn btn-primary font-bold"
                       disabled={
-                        classItem.availableSeats === 0 || isAdmin || isInstructor
-                      }
-                    >
+                        classItem.availableSeats === 0 ||
+                        isAdmin ||
+                        isInstructor
+                      }>
                       {isAdmin && "Admins cannot select classes"}
                       {isInstructor && "Instructors cannot select classes"}
                       {!isAdmin && !isInstructor && "Select"}

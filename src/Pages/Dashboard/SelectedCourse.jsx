@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../provider/AuthProvider";
 import { useContext } from "react";
 import { PhotoProvider } from "react-photo-view";
+import { Link } from "react-router-dom";
 
 const SelectedCourse = () => {
   const { user } = useContext(AuthContext);
@@ -98,9 +99,11 @@ const SelectedCourse = () => {
                         className="btn btn-primary btn-square text-xl">
                         <MdDeleteForever />
                       </button>
-                      <button className="btn btn-primary btn-square ml-4 text-xl">
-                        <MdPayment />
-                      </button>
+                      <Link to="/dashboard/payment">
+                        <button className="btn btn-primary btn-square ml-4 text-xl">
+                          <MdPayment />
+                        </button>
+                      </Link>
                     </th>
                   </tr>
                 ))}
