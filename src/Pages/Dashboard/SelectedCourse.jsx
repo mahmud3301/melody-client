@@ -1,5 +1,5 @@
 import React from "react";
-import useCart from "../../Components/useCart";
+import useCart from "../../hooks/useCart";
 import { Helmet } from "react-helmet-async";
 import { MdDeleteForever, MdPayment } from "react-icons/md";
 import Swal from "sweetalert2";
@@ -41,14 +41,11 @@ const SelectedCourse = () => {
         <title>Melody | My Selected Classes</title>
       </Helmet>
 
-      <div className="grid grid-cols-2 justify-between items-center">
+      <div className="items-center">
         <p className="text-5xl font-bold text-center underline mb-12 ">
-          Welcome!! <span className="text-primary">{user.displayName}</span>
+          <span className="text-primary">{user.displayName}</span> here is your
+          added classes
         </p>
-        <img
-          className="mask mask-squircle w-32 mb-5 justify-end ml-[50%] lg:ml-[75%]"
-          src={user.photoURL}
-        />
       </div>
 
       {cart.length > 0 ? (

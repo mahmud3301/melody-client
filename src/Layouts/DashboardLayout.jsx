@@ -1,9 +1,12 @@
 import React from "react";
 import { FaBook, FaCartPlus, FaUser } from "react-icons/fa";
+import { RiDashboardFill } from "react-icons/ri";
 import { NavLink, Outlet } from "react-router-dom";
+import useAdmin from "../hooks/useAdmin";
 
 const DashboardLayout = () => {
-  const isAdmin = true;
+  const [isAdmin] = useAdmin();
+  // const isAdmin = true; 
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="drawer lg:drawer-open">
@@ -35,9 +38,18 @@ const DashboardLayout = () => {
               <>
                 <li>
                   <NavLink
-                    to="/dashboard/all-users"
+                    to="/dashboard"
                     activeClassName=""
                     className="text-lg font-medium mb-3 mt-9">
+                    <RiDashboardFill className="text-primary" /> Dashboard
+                  </NavLink>
+                </li>
+                <div className="divider"></div>
+                <li>
+                  <NavLink
+                    to="/dashboard/all-users"
+                    activeClassName=""
+                    className="text-lg font-medium mb-5">
                     <FaUser className="text-primary" /> Manage Users
                   </NavLink>
                 </li>
@@ -54,9 +66,18 @@ const DashboardLayout = () => {
               <>
                 <li>
                   <NavLink
+                    to="/dashboard"
+                    activeClassName=""
+                    className="text-lg font-medium mb-3 mt-9">
+                    <RiDashboardFill className="text-primary" /> Dashboard
+                  </NavLink>
+                </li>
+                <div className="divider"></div>
+                <li>
+                  <NavLink
                     to="/dashboard/selected-course"
                     activeClassName=""
-                    className="text-lg font-medium mb-5 mt-9">
+                    className="text-lg font-medium mb-5">
                     <FaBook className="text-primary" /> My Selected Classes
                   </NavLink>
                 </li>

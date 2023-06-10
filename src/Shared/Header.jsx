@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
-import useCart from "../Components/useCart";
 
 const Header = () => {
   const { user, logOut } = useContext(AuthContext);

@@ -39,7 +39,7 @@ const Classes = () => {
         .then((data) => {
           if (data.insertedId) {
             Swal.fire({
-              position: "top-end",
+              
               icon: "success",
               title: "Class added on the cart.",
               showConfirmButton: false,
@@ -49,7 +49,7 @@ const Classes = () => {
         });
     } else {
       Swal.fire({
-        title: "Please login to order the food",
+        title: "Please login to order the class",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
