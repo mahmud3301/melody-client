@@ -3,9 +3,14 @@ import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import useAdmin from "../../hooks/useAdmin";
+import useInstructor from "../../hooks/useInstructor";
 
 const Classes = () => {
   const { user } = useContext(AuthContext);
+  const [isAdmin] = useAdmin();
+  const [isInstructor] = useInstructor();
+
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
@@ -17,7 +22,6 @@ const Classes = () => {
   }, []);
 
   const handleAddToCart = (classItem) => {
-    console.log(classItem);
     if (user && user.email) {
       const courseItem = {
         name: classItem.name,
@@ -39,9 +43,8 @@ const Classes = () => {
         .then((data) => {
           if (data.insertedId) {
             Swal.fire({
-              
               icon: "success",
-              title: "Class added on the cart.",
+              title: "Class added to the cart.",
               showConfirmButton: false,
               timer: 1500,
             });
@@ -57,7 +60,7 @@ const Classes = () => {
         confirmButtonText: "Login now!",
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate("/login", { state: { from: location } });
+          navigate("/login", { state: { from: location.pathname } });
         }
       });
     }
@@ -73,13 +76,15 @@ const Classes = () => {
           {data.map((classItem) => (
             <div
               key={classItem.name}
-              className="mb-5 h-full cursor-pointer group transition">
+              className="mb-5 h-full cursor-pointer group transition"
+            >
               <div
                 className={`card w-full ${
                   classItem.availableSeats === 0
                     ? "bg-red-500"
                     : "glass bg-base-200"
-                }`}>
+                }`}
+              >
                 <figure>
                   <img
                     className="h-96 group-hover:scale-125 transition"
@@ -107,10 +112,15 @@ const Classes = () => {
                   </p>
                   <div className="card-actions justify-end">
                     <button
+                      onClick={() => handleAddToCart(classItem)}
                       className="btn btn-primary font-bold"
-                      disabled={classItem.availableSeats === 0}
-                      onClick={() => handleAddToCart(classItem)}>
-                      Select !!!
+                      disabled={
+                        classItem.availableSeats === 0 || isAdmin || isInstructor
+                      }
+                    >
+                      {isAdmin && "Admins cannot select classes"}
+                      {isInstructor && "Instructors cannot select classes"}
+                      {!isAdmin && !isInstructor && "Select"}
                     </button>
                   </div>
                 </div>

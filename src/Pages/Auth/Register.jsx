@@ -51,20 +51,14 @@ const Register = () => {
       name,
       email,
     };
-
-    // Validate password length
     if (password.length < 6) {
       setPasswordError("Password must be at least 6 characters");
       return;
     }
-
-    // Validate password has a capital letter
     if (!/[A-Z]/.test(password)) {
       setCapitalLetterError(true);
       return;
     }
-
-    // Validate password has a special character
     if (!/[!@#$%^&*]/.test(password)) {
       setSpecialCharacterError(true);
       return;
@@ -89,7 +83,7 @@ const Register = () => {
             })
               .then(() => {
                 console.log("Profile updated!");
-                navigate(from, { replace: true });
+                navigate(from || "/", { replace: true });
 
                 Swal.fire({
                   title: "User Created",
@@ -131,7 +125,7 @@ const Register = () => {
         })
           .then(() => {
             console.log("Profile updated!");
-            navigate(from, { replace: true });
+            navigate(from || "/", { replace: true });
 
             Swal.fire({
               title: "User Created",

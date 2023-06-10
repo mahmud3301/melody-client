@@ -5,6 +5,7 @@ import { MdDeleteForever, MdPayment } from "react-icons/md";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../provider/AuthProvider";
 import { useContext } from "react";
+import { PhotoProvider } from "react-photo-view";
 
 const SelectedCourse = () => {
   const { user } = useContext(AuthContext);

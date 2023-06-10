@@ -13,12 +13,14 @@ import EnrolledClasses from "../Pages/Dashboard/EnrolledClasses";
 import AllUsers from "../Pages/Dashboard/AllUsers";
 import ManageClasses from "../Pages/Dashboard/ManageClasses";
 import Dashboard from "../Pages/Dashboard/Dashboard";
+import AddAClass from "../Pages/Dashboard/AddAClass";
+import MyClasses from "../Pages/Dashboard/MyClasses";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
-    // errorElement: <Error />,
+    errorElement: <Error />,
     children: [
       {
         path: "/",
@@ -52,25 +54,37 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard",
-        element: <Dashboard/>,
+        element: (
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/selected-course",
-        element: <SelectedCourse/>,
+        element: <SelectedCourse />,
       },
       {
         path: "/dashboard/my-enrolled-classes",
-        element: <EnrolledClasses/>
+        element: <EnrolledClasses />,
       },
       {
         path: "/dashboard/all-users",
-        element: <AllUsers/>
+        element: <AllUsers />,
       },
       {
         path: "/dashboard/manage-classes",
-        element: <ManageClasses/>
-      }
-    ]
+        element: <ManageClasses />,
+      },
+      {
+        path: "/dashboard/add-a-class",
+        element: <AddAClass />,
+      },
+      {
+        path: "/dashboard/my-classes",
+        element: <MyClasses />,
+      },
+    ],
   },
 ]);
 

@@ -150,7 +150,7 @@ const Header = () => {
                 <PhotoProvider className="rounded-xl">
                   <PhotoView src={user.photoURL}>
                     <img
-                      className="w-10 mt-2 rounded-xl group-hover:scale-125  transition"
+                      className="w-10 h-10 mt-2 rounded-xl group-hover:scale-125  transition"
                       src={user.photoURL}
                       alt={user.displayName}
                     />

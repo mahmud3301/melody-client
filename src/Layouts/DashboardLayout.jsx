@@ -1,12 +1,15 @@
 import React from "react";
-import { FaBook, FaCartPlus, FaUser } from "react-icons/fa";
+import { FaBook, FaCartPlus, FaUser, FaPlus, FaHome } from "react-icons/fa";
 import { RiDashboardFill } from "react-icons/ri";
+import { BsFillBookFill } from "react-icons/bs";
 import { NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
+import useInstructor from "../hooks/useInstructor";
 
 const DashboardLayout = () => {
   const [isAdmin] = useAdmin();
-  // const isAdmin = true; 
+  const [isInstructor] = useInstructor();
+
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="drawer lg:drawer-open">
@@ -34,13 +37,21 @@ const DashboardLayout = () => {
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
           <ul className="menu p-4 w-80 h-full bg-base-200 text-base-content">
-            {isAdmin ? (
+            {isAdmin && (
               <>
+                <li>
+                  <NavLink
+                    to="/"
+                    activeClassName=""
+                    className="text-lg font-medium mb-3 mt-9">
+                    <FaHome className="text-primary" /> Home
+                  </NavLink>
+                </li>
                 <li>
                   <NavLink
                     to="/dashboard"
                     activeClassName=""
-                    className="text-lg font-medium mb-3 mt-9">
+                    className="text-lg font-medium mb-3">
                     <RiDashboardFill className="text-primary" /> Dashboard
                   </NavLink>
                 </li>
@@ -62,13 +73,59 @@ const DashboardLayout = () => {
                   </NavLink>
                 </li>
               </>
-            ) : (
+            )}
+            {isInstructor && (
               <>
+                <li>
+                  <NavLink
+                    to="/"
+                    activeClassName=""
+                    className="text-lg font-medium mb-3 mt-9">
+                    <FaHome className="text-primary" /> Home
+                  </NavLink>
+                </li>
                 <li>
                   <NavLink
                     to="/dashboard"
                     activeClassName=""
+                    className="text-lg font-medium mb-3">
+                    <RiDashboardFill className="text-primary" /> Dashboard
+                  </NavLink>
+                </li>
+                <div className="divider"></div>
+                <li>
+                  <NavLink
+                    to="/dashboard/add-a-class"
+                    activeClassName=""
+                    className="text-lg font-medium mb-5">
+                    <FaPlus className="text-primary" /> Add a Class
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/my-classes"
+                    activeClassName=""
+                    className="text-lg font-medium mb-3">
+                    <BsFillBookFill className="text-primary" /> My Classes
+                  </NavLink>
+                </li>
+              </>
+            )}
+            {!isAdmin && !isInstructor && (
+              <>
+                <li>
+                  <NavLink
+                    to="/"
+                    activeClassName=""
                     className="text-lg font-medium mb-3 mt-9">
+                    <FaHome className="text-primary" /> Home
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard"
+                    activeClassName=""
+                    className="text-lg font-medium mb-3">
                     <RiDashboardFill className="text-primary" /> Dashboard
                   </NavLink>
                 </li>

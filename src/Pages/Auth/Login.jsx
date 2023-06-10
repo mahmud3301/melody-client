@@ -39,7 +39,7 @@ const Login = () => {
       .then((result) => {
         const loggedUser = result.user;
         console.log(loggedUser);
-        navigate(from, { replace: true });
+        navigate(from || "/", { replace: true });
 
         Swal.fire({
           title: "Login Successful",
@@ -74,7 +74,7 @@ const Login = () => {
         })
           .then(() => {
             console.log("Profile updated!");
-            navigate(from, { replace: true });
+            navigate(from || "/", { replace: true });
 
             Swal.fire({
               title: "Login Successful",

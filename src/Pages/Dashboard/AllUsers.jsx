@@ -59,7 +59,7 @@ const AllUsers = () => {
             All users: {users.length}
           </h1>
           <div className="overflow-x-auto w-full">
-            <table className="table text-center shadow-2xl">
+            <table className="table shadow-2xl">
               <thead className="bg-primary">
                 <tr>
                   <th className="text-lg font-bold"></th>
@@ -77,16 +77,14 @@ const AllUsers = () => {
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>
-                      <button
-                        onClick={() => handleMakeAdmin(user)}
-                        className="btn btn-sm btn-primary"
-                      >
-                        {user.role === "admin" ? "Admin" : "Make Admin"}
-                      </button>
+                        <button
+                          onClick={() => handleMakeAdmin(user)}
+                          className="btn btn-sm btn-primary">
+                          {user.role === "admin" ? "Admin" : "Make Admin"}
+                        </button>
                       <button
                         onClick={() => handleMakeInstructor(user)}
-                        className="btn btn-sm btn-primary ml-5"
-                      >
+                        className="btn btn-sm btn-primary ml-20">
                         {user.role === "instructor"
                           ? "Instructor"
                           : "Make Instructor"}
