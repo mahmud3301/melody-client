@@ -6,7 +6,7 @@ const Error = () => {
       <div>
         <img
           className="mx-auto justify-center items-center mt-[55%] lg:mt-0"
-          src="https://miro.medium.com/v2/resize:fit:800/1*hFwwQAW45673VGKrMPE2qQ.png"
+          src="https://www.pagenotfound.ca/img/404_test_1a.gif"
           alt=""
         />
       </div>
