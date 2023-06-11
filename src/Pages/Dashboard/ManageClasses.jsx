@@ -14,6 +14,27 @@ const ManageClasses = () => {
     });
   }, [axiosSecure, updatedLog]);
 
+  const handleAccept = (classData) => {
+    const confirm = window.confirm(
+      "Are you sure you want to accept this class?"
+    );
+    if (confirm) {
+      axiosSecure
+        .put(`/classes/${classData._id}?status=approved`)
+        .then((response) => {
+          if (response.data.modifiedCount > 0) {
+            Swal.fire({
+              icon: "success",
+              title: "Class Approved",
+              showConfirmButton: true,
+              timer: 1500,
+            });
+            updatedLog(!updatedLog);
+            console.log(classData);
+          }
+        });
+    }
+  };
   
 
   return (
