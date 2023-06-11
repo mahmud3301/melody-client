@@ -35,7 +35,27 @@ const ManageClasses = () => {
         });
     }
   };
-  
+  const handleDeny = (classData) => {
+    const confirm = window.confirm(
+      "Are you sure you want to delete this class?"
+    );
+    if (confirm) {
+      axiosSecure
+        .put(`/classes/${classData._id}?status=deny`)
+        .then((response) => {
+          if (response.data.modifiedCount > 0) {
+            Swal.fire({
+              icon: "success",
+              title: "Class denied",
+              showConfirmButton: true,
+              timer: 1500,
+            });
+            updatedLog(!updatedLog);
+            console.log(classData);
+          }
+        });
+    }
+  };
 
   return (
     <div className="w-full h-full mt-[100%]">
