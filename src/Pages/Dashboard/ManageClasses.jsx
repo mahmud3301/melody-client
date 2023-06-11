@@ -35,6 +35,8 @@ const ManageClasses = () => {
         });
     }
   };
+
+  
   const handleDeny = (classData) => {
     const confirm = window.confirm(
       "Are you sure you want to delete this class?"
