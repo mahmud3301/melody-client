@@ -63,6 +63,7 @@ const Login = () => {
         const saveUser = {
           name: displayName,
           email,
+          url: photoURL,
         };
 
         fetch("http://localhost:5000/user", {

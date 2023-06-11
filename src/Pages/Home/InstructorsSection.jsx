@@ -3,21 +3,24 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 const InstructorsSection = () => {
-    const [data, setData] = useState([]);
-    const [sortedInstructors, setSortedInstructors] = useState([]);
-  
-    useEffect(() => {
-      fetch("http://localhost:5000/instructors")
-      // fetch("instructors.json")
-        .then((res) => res.json())
-        .then((data) => {
-          const sortedInstructors = data
-            .sort((a, b) => b.numClasses - a.numClasses)
-            .slice(0, 6);
-          setData(data);
-          setSortedInstructors(sortedInstructors);
-        });
-    }, []);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [sortedInstructors, setSortedInstructors] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/instructors")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data) {
+          setLoading(!loading);
+        }
+        const sortedInstructors = data
+          .sort((a, b) => b.numClasses - a.numClasses)
+          .slice(0, 6);
+        setData(data);
+        setSortedInstructors(sortedInstructors);
+      });
+  }, [loading]);
 
   return (
     <div>
@@ -30,19 +33,30 @@ const InstructorsSection = () => {
             key={index}
             className="card grid grid-cols-1 md:grid-cols-2 glass bg-base-200 shadow-3xl group transition cursor-pointer">
             <figure>
-                <img
+              <img
                 className="h-96 w-96 group-hover:scale-125 transition"
-                  src={instructor.image}
-                  alt={instructor.name}
-                />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">{instructor.name}</h2>
-                <p><span className="font-semibold underline">Email</span>: {instructor.email}</p>
-                <p><span className="underline font-semibold">Number of Classes</span>: {instructor.numClasses}</p>
-                <p><span className="underline font-semibold">Classes Taken</span>: {instructor.classesTaken.join(", ")}</p>
-              </div>
+                src={instructor.url}
+                alt={instructor.name}
+              />
+            </figure>
+            <div className="card-body">
+              <h2 className="card-title">{instructor.name}</h2>
+              <p>
+                <span className="font-semibold underline">Email</span>:{" "}
+                {instructor.email}
+              </p>
+              <p>
+                <span className="underline font-semibold">
+                  Number of Classes
+                </span>
+                : {instructor.numClasses}
+              </p>
+              <p>
+                <span className="underline font-semibold">Classes Taken</span>:{" "}
+                {instructor.classesTaken.join(", ")}
+              </p>
             </div>
+          </div>
         ))}
       </div>
     </div>

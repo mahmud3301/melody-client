@@ -49,6 +49,7 @@ const Register = () => {
     const { name, url, email, password } = formData;
     const saveUser = {
       name,
+      url,
       email,
     };
     if (password.length < 6) {
@@ -114,6 +115,7 @@ const Register = () => {
         const saveUser = {
           name: displayName,
           email,
+          url: photoURL
         };
 
         fetch("http://localhost:5000/user", {

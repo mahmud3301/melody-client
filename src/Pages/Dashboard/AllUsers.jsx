@@ -49,7 +49,7 @@ const AllUsers = () => {
   };
 
   return (
-    <div className="w-full h-full mt-[50%] text-center">
+    <div className="w-full mt-[55%] text-center">
       <Helmet>
         <title>Melody | All users</title>
       </Helmet>
@@ -76,7 +76,7 @@ const AllUsers = () => {
                     <th>{index + 1}</th>
                     <td>{user.name}</td>
                     <td>{user.email}</td>
-                    <td>
+                    <td className="flex">
                       <button
                         onClick={() => handleMakeAdmin(user)}
                         className="btn btn-sm btn-primary">

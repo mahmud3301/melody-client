@@ -9,20 +9,23 @@ import useInstructor from "../../hooks/useInstructor";
 const Classes = () => {
   const { user } = useContext(AuthContext);
   const [isAdmin] = useAdmin();
+  const [changeLog, setChangeLog] = useState(false);
   const [isInstructor] = useInstructor();
-
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    fetch("http://localhost:5000/classes")
+    fetch("http://localhost:5000/approved-classes")
       .then((res) => res.json())
       .then((data) => {
+        if (data) {
+          setChangeLog(!changeLog);
+        }
         const sortedClasses = data.sort((a, b) => b.students - a.students);
         setData(sortedClasses);
       });
-  }, []);
+  }, [changeLog]);
 
   const handleAddToCart = (classItem) => {
     if (user && user.email) {
@@ -83,7 +86,7 @@ const Classes = () => {
               <div
                 className={`card w-full ${
                   classItem.availableSeats === 0
-                    ? "bg-red-500"
+                    ? "bg-error"
                     : "glass bg-base-200"
                 }`}>
                 <figure>
@@ -108,10 +111,8 @@ const Classes = () => {
                     : {classItem.availableSeats}
                   </p>
                   <p>
-                    <span className="underline font-medium">
-                      Students
-                    </span>
-                    : {classItem.students}
+                    <span className="underline font-medium">Students</span>:{" "}
+                    {classItem.students}
                   </p>
                   <p>
                     <span className="underline font-medium">Rate</span>: $

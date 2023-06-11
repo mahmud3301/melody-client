@@ -1,23 +1,68 @@
 import React, { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { Helmet } from "react-helmet-async";
+import Swal from "sweetalert2";
 
 const ManageClasses = () => {
   const [axiosSecure] = useAxiosSecure();
   const [classData, setClassData] = useState([]);
+  const [updatedLog, setUpdatedLog] = useState(false);
 
   useEffect(() => {
     axiosSecure.get("/classes").then((response) => {
       setClassData(response.data);
     });
-  }, [axiosSecure]);
+  }, [axiosSecure, updatedLog]);
+
+  const handleAccept = (classData) => {
+    const confirm = window.confirm(
+      "Are you sure you want to accept this class?"
+    );
+    if (confirm) {
+      axiosSecure
+        .put(`/classes/${classData._id}?status=approved`)
+        .then((response) => {
+          if (response.data.modifiedCount > 0) {
+            Swal.fire({
+              icon: "success",
+              title: "Class Approved",
+              showConfirmButton: true,
+              timer: 1500,
+            });
+            updatedLog(!updatedLog);
+            console.log(classData);
+          }
+        });
+    }
+  };
+  const handleDeny = (classData) => {
+    const confirm = window.confirm(
+      "Are you sure you want to delete this class?"
+    );
+    if (confirm) {
+      axiosSecure
+        .put(`/classes/${classData._id}?status=deny`)
+        .then((response) => {
+          if (response.data.modifiedCount > 0) {
+            Swal.fire({
+              icon: "success",
+              title: "Class denied",
+              showConfirmButton: true,
+              timer: 1500,
+            });
+            updatedLog(!updatedLog);
+            console.log(classData);
+          }
+        });
+    }
+  };
 
   return (
     <div className="w-full h-full mt-[100%]">
       <Helmet>
         <title>Melody | Manage classes</title>
       </Helmet>
-      <p className="text-5xl font-bold text-center mb-12 ">
+      <p className="text-5xl font-bold text-center mb-12">
         Manage <span className="text-primary">Classes</span>
       </p>
 
@@ -32,6 +77,8 @@ const ManageClasses = () => {
               <th className="text-lg font-bold">Price</th>
               <th className="text-lg font-bold">Instructor</th>
               <th className="text-lg font-bold">Instructor Email</th>
+              <th className="text-lg font-bold">Available Seats</th>
+              <th className="text-lg font-bold">Status</th>
               <th className="text-lg font-bold">Actions</th>
             </tr>
           </thead>
@@ -41,11 +88,13 @@ const ManageClasses = () => {
                 <th></th>
                 <th>{index + 1}</th>
                 <td>
-                  <div className="flex items-center space-x-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle w-12 h-12">
-                        <img src={item.image} alt={item.name} />
-                      </div>
+                  <div className="flex items-center justify-center">
+                    <div className="w-12 h-12 overflow-hidden rounded-full">
+                      <img
+                        className="w-full h-full object-cover"
+                        src={item.image}
+                        alt={item.name}
+                      />
                     </div>
                   </div>
                 </td>
@@ -57,26 +106,27 @@ const ManageClasses = () => {
                 <td>${item.price}</td>
                 <td>{item.instructorName}</td>
                 <td>{item.instructorEmail}</td>
-                <td>
-                  <label>
-                    <input
-                      type="checkbox"
-                      className="checkbox checkbox-primary "
-                    />
-                  </label>
-                  <label>
-                    <input
-                      type="checkbox"
-                      className="checkbox checkbox-primary "
-                    />
-                  </label>
+                <td>{item.availableSeats}</td>
+                <td>{item.status}</td>
+                <td className="flex justify-center">
+                  <button
+                    disabled={item.status === "approved" || item.status === "deny"}
+                    onClick={() => handleAccept(item)}
+                    className="btn btn-primary mx-2">
+                    Accept
+                  </button>
+                  <button
+                    className="btn btn-error mx-2"
+                    onClick={() => handleDeny(item)}
+                    disabled={item.status === "approved" || item.status === "deny"}>
+                    Deny
+                  </button>
+                  <button className="btn btn-secondary mx-2">Feedback</button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <br />
-        <br />
       </div>
     </div>
   );

@@ -92,7 +92,7 @@ const SelectedCourse = () => {
                       </div>
                     </td>
                     <td>${item.price}</td>
-                    <td>{item.instructor}</td>
+                    <td>{item.name}</td>
                     <th>
                       <button
                         onClick={() => handleDelete(item)}

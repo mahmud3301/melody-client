@@ -4,13 +4,15 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 
 const Instructors = () => {
+  const [loading, setLoading] = useState(false);
   const [instructors, setInstructors] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:5000/instructors")
       .then((res) => res.json())
       .then((data) => setInstructors(data));
-  }, []);
+    setLoading(!loading);
+  }, [loading]);
 
   return (
     <div>
@@ -21,37 +23,21 @@ const Instructors = () => {
         {instructors.map((instructor, index) => (
           <div
             key={index}
-            className="card grid grid-cols-1 lg:grid-cols-2 glass bg-base-200 shadow-3xl group transition cursor-pointer"
-          >
+            className="card grid grid-cols-1 lg:grid-cols-2 glass bg-base-200 shadow-3xl group transition cursor-pointer">
             <figure>
               <img
                 className="h-96 w-96 group-hover:scale-125 transition"
-                src={instructor.image}
+                src={instructor.url}
                 alt={instructor.name}
               />
             </figure>
-            <div className="card-body">
+            <div className="card-body justify-center">
               <h2 className="card-title">{instructor.name}</h2>
-              <p>
-                <span className="font-semibold underline">Email</span>:{" "}
-                {instructor.email}
-              </p>
-              {instructor.numClasses && (
-                <p>
-                  <span className="underline font-semibold">
-                    Number of Classes
-                  </span>
-                  : {instructor.numClasses}
-                </p>
-              )}
-              {instructor.classesTaken && (
-                <p>
-                  <span className="underline font-semibold">
-                    Classes Taken
-                  </span>
-                  : {instructor.classesTaken.join(", ")}
-                </p>
-              )}
+              <div className="justify-center">
+                <p>Email:</p>
+                <br />
+                <p>{instructor.email}</p>
+              </div>
             </div>
           </div>
         ))}
