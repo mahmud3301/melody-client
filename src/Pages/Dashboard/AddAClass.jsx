@@ -13,11 +13,15 @@ const AddClass = () => {
   const onSubmit = async (data) => {
     try {
       const newData = {
-        ...data,
-        students: 0,
-        instructorName: user.displayName,
+        price: parseFloat(data.price),
+        image: data.image,
+        name: data.name,
+        availableSeats: parseInt(data.availableSeats),
+        instructorId: user._id,
         instructorEmail: user.email,
+        instructorName: user.displayName,
         status: "pending",
+        students: 0,
       };
       await axiosSecure.post("/classes", newData).then((res) => console.log(res.data));
       reset();
