@@ -65,19 +65,19 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard/selected-course",
+        path: "selected-course",
         element: <SelectedCourse />,
       },
       {
-        path: "/dashboard/my-enrolled-classes",
+        path: "my-enrolled-classes",
         element: <EnrolledClasses />,
       },
       {
-        path: "/dashboard/payment",
-        element: <Payment />,
+        path: "payment/:id",
+        element: <Payment/>,
       },
       {
-        path: "/dashboard/all-users",
+        path: "all-users",
         element: (
           <AdminRoute>
             <AllUsers />
@@ -85,7 +85,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard/manage-classes",
+        path: "manage-classes",
         element: (
           <AdminRoute>
             <ManageClasses />
@@ -93,7 +93,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard/add-a-class",
+        path: "add-a-class",
         element: (
           <InstructorRoute>
             <AddAClass />
@@ -101,7 +101,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard/my-classes",
+        path: "my-classes",
         element: (
           <InstructorRoute>
             <MyClasses />

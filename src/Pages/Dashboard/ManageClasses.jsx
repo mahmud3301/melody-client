@@ -7,6 +7,9 @@ const ManageClasses = () => {
   const [axiosSecure] = useAxiosSecure();
   const [classData, setClassData] = useState([]);
   const [updatedLog, setUpdatedLog] = useState(false);
+  const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [selectedClass, setSelectedClass] = useState(null);
 
   useEffect(() => {
     axiosSecure.get("/classes").then((response) => {
@@ -27,16 +30,14 @@ const ManageClasses = () => {
               icon: "success",
               title: "Class Approved",
               showConfirmButton: true,
-              timer: 1500,
+              timer: 1500
             });
-            updatedLog(!updatedLog);
-            console.log(classData);
+            setUpdatedLog(!updatedLog);
           }
         });
     }
   };
 
-  
   const handleDeny = (classData) => {
     const confirm = window.confirm(
       "Are you sure you want to delete this class?"
@@ -50,13 +51,51 @@ const ManageClasses = () => {
               icon: "success",
               title: "Class denied",
               showConfirmButton: true,
-              timer: 1500,
+              timer: 1500
             });
-            updatedLog(!updatedLog);
-            console.log(classData);
+            setUpdatedLog(!updatedLog);
           }
         });
     }
+  };
+
+  const handleFeedbackModalOpen = (classData) => {
+    setSelectedClass(classData);
+    setFeedbackModalOpen(true);
+  };
+
+  const handleFeedbackModalClose = () => {
+    setSelectedClass(null);
+    setFeedbackModalOpen(false);
+    setFeedbackMessage("");
+  };
+
+  const handleSendFeedback = () => {
+    if (feedbackMessage.trim() === "") {
+      Swal.fire({
+        icon: "error",
+        title: "Feedback Error",
+        text: "Please enter a feedback message"
+      });
+      return;
+    }
+
+    const feedbackData = {
+      classId: selectedClass._id,
+      feedback: feedbackMessage
+    };
+
+    axiosSecure.post("/feedback", feedbackData).then((response) => {
+      if (response.data) {
+        Swal.fire({
+          icon: "success",
+          title: "Feedback Sent",
+          showConfirmButton: true,
+          timer: 1500
+        });
+        handleFeedbackModalClose();
+      }
+    });
   };
 
   return (
@@ -112,7 +151,9 @@ const ManageClasses = () => {
                 <td>{item.status}</td>
                 <td className="flex justify-center">
                   <button
-                    disabled={item.status === "approved" || item.status === "deny"}
+                    disabled={
+                      item.status === "approved" || item.status === "deny"
+                    }
                     onClick={() => handleAccept(item)}
                     className="btn btn-primary mx-2">
                     Accept
@@ -120,16 +161,51 @@ const ManageClasses = () => {
                   <button
                     className="btn btn-error mx-2"
                     onClick={() => handleDeny(item)}
-                    disabled={item.status === "approved" || item.status === "deny"}>
+                    disabled={
+                      item.status === "approved" || item.status === "deny"
+                    }>
                     Deny
                   </button>
-                  <button className="btn btn-secondary mx-2">Feedback</button>
+                  <button
+                    className="btn btn-secondary mx-2"
+                    onClick={() => handleFeedbackModalOpen(item)}>
+                    Feedback
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+      {/* Feedback Modal */}
+      {feedbackModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-70">
+          <div className="mx-auto p-8 bg-base-200 rounded-lg">
+            <div className="flex justify-end">
+              <button
+                className="text-gray-500 hover:text-gray-700"
+                onClick={handleFeedbackModalClose}>
+                Close
+              </button>
+            </div>
+            <div className="mt-4">
+              <textarea
+                type="text"
+                value={feedbackMessage}
+                onChange={(e) => setFeedbackMessage(e.target.value)}
+                placeholder="Feedback"
+                className="textarea w-96 h-36"
+              />
+            </div>
+            <div className="mt-4 flex justify-end">
+              <button className="btn btn-primary" onClick={handleSendFeedback}>
+                Send
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -5,7 +5,7 @@ const Error = () => {
     <div className="bg-base-300 py-[5%] items-center min-h-screen">
       <div>
         <img
-          className="mx-auto justify-center items-center mt-[55%] lg:mt-0"
+          className="mx-auto justify-center items-center mt-[55%] lg:mt-0 h-96"
           src="https://www.pagenotfound.ca/img/404_test_1a.gif"
           alt=""
         />

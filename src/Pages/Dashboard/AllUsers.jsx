@@ -16,7 +16,6 @@ const AllUsers = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.modifiedCount) {
           refetch();
           Swal.fire({
@@ -35,12 +34,29 @@ const AllUsers = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.modifiedCount) {
           refetch();
           Swal.fire({
             icon: "success",
             title: `${user.name} is an Instructor Now!`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
+  };
+  
+  const handleMakeStudent = (user) => {
+    fetch(`http://localhost:5000/users/student/${user._id}`, {
+      method: "PATCH",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount) {
+          refetch();
+          Swal.fire({
+            icon: "success",
+            title: `${user.name} is an Student Now!`,
             showConfirmButton: false,
             timer: 1500,
           });
@@ -79,15 +95,22 @@ const AllUsers = () => {
                     <td className="flex">
                       <button
                         onClick={() => handleMakeAdmin(user)}
-                        className="btn btn-sm btn-primary">
+                        className="btn btn-sm btn-accent">
                         {user.role === "admin" ? "Admin" : "Make Admin"}
                       </button>
                       <button
                         onClick={() => handleMakeInstructor(user)}
-                        className="btn btn-sm btn-primary ml-20">
+                        className="btn btn-sm btn-info ml-20">
                         {user.role === "instructor"
                           ? "Instructor"
                           : "Make Instructor"}
+                      </button>
+                      <button
+                        onClick={() => handleMakeStudent(user)}
+                        className="btn btn-sm btn-secondary ml-20">
+                        {user.role === "student"
+                          ? "student"
+                          : "Make student"}
                       </button>
                     </td>
                   </tr>

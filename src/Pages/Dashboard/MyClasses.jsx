@@ -2,6 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { Fade } from "react-awesome-reveal";
 import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../../provider/AuthProvider";
 
@@ -12,7 +13,7 @@ const MyClasses = () => {
     fetch(`http://localhost:5000/instructors-classes?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => setData(data));
-      // .then((data) => console.log(data));
+    // .then((data) => console.log(data));
   });
   return (
     <div className="w-full">
@@ -65,7 +66,9 @@ const MyClasses = () => {
                 </td>
                 <td>
                   <div>
-                    <button className="font-bold btn btn-accent">{item.status}</button>
+                    <button className="font-bold btn btn-accent">
+                      {item.status}
+                    </button>
                   </div>
                 </td>
                 <td>${item.price}</td>

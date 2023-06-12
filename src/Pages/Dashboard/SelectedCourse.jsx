@@ -68,7 +68,7 @@ const SelectedCourse = () => {
                   <th className="text-lg font-bold">Image</th>
                   <th className="text-lg font-bold">Name</th>
                   <th className="text-lg font-bold">Price</th>
-                  <th className="text-lg font-bold">Instructor</th>
+                  <th className="text-lg font-bold">Instructor Mail</th>
                   <th className="text-lg font-bold">Actions</th>
                 </tr>
               </thead>
@@ -92,7 +92,7 @@ const SelectedCourse = () => {
                       </div>
                     </td>
                     <td>${item.price}</td>
-                    <td>{item.name}</td>
+                    <td>{item.email}</td>
                     <th>
                       <button
                         onClick={() => handleDelete(item)}

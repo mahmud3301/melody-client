@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import useAdmin from "../../hooks/useAdmin";
 import useInstructor from "../../hooks/useInstructor";
+import { Fade } from "react-awesome-reveal";
 
 const Classes = () => {
   const { user } = useContext(AuthContext);
@@ -80,61 +81,61 @@ const Classes = () => {
       <div className="py-8 px-8 lg:px-36">
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {data.map((classItem) => (
-            <div
-              key={classItem.name}
-              className="mb-5 h-full cursor-pointer group transition">
-              <div
-                className={`card w-full ${
-                  classItem.availableSeats === 0
-                    ? "bg-error"
-                    : "glass bg-base-200"
-                }`}>
-                <figure>
-                  <img
-                    className="h-96 group-hover:scale-125 transition"
-                    src={classItem.image}
-                    alt={classItem.name}
-                  />
-                </figure>
-                <div className="card-body">
-                  <h2 className="card-title">{classItem.name}</h2>
-                  <p>
-                    <span className="underline font-medium">
-                      Instructor Name
-                    </span>
-                    : {classItem.instructorName}
-                  </p>
-                  <p>
-                    <span className="underline font-medium">
-                      Available Seats
-                    </span>
-                    : {classItem.availableSeats}
-                  </p>
-                  <p>
-                    <span className="underline font-medium">Students</span>:{" "}
-                    {classItem.students}
-                  </p>
-                  <p>
-                    <span className="underline font-medium">Rate</span>: $
-                    {classItem.price}
-                  </p>
-                  <div className="card-actions justify-end">
-                    <button
-                      onClick={() => handleAddToCart(classItem)}
-                      className="btn btn-primary font-bold"
-                      disabled={
-                        classItem.availableSeats === 0 ||
-                        isAdmin ||
-                        isInstructor
-                      }>
-                      {isAdmin && "Admins cannot select classes"}
-                      {isInstructor && "Instructors cannot select classes"}
-                      {!isAdmin && !isInstructor && "Select"}
-                    </button>
+            <Fade key={classItem.name}>
+              <div className="mb-5 h-full cursor-pointer group transition">
+                <div
+                  className={`card w-full ${
+                    classItem.availableSeats === 0
+                      ? "bg-error"
+                      : "glass bg-base-200"
+                  }`}>
+                  <figure>
+                    <img
+                      className="h-96 group-hover:scale-125 transition"
+                      src={classItem.image}
+                      alt={classItem.name}
+                    />
+                  </figure>
+                  <div className="card-body">
+                    <h2 className="card-title">{classItem.name}</h2>
+                    <p>
+                      <span className="underline font-medium">
+                        Instructor Name
+                      </span>
+                      : {classItem.instructorName}
+                    </p>
+                    <p>
+                      <span className="underline font-medium">
+                        Available Seats
+                      </span>
+                      : {classItem.availableSeats}
+                    </p>
+                    <p>
+                      <span className="underline font-medium">Students</span>:{" "}
+                      {classItem.students}
+                    </p>
+                    <p>
+                      <span className="underline font-medium">Rate</span>: $
+                      {classItem.price}
+                    </p>
+                    <div className="card-actions justify-end">
+                      <button
+                        onClick={() => handleAddToCart(classItem)}
+                        className="btn btn-primary font-bold"
+                        disabled={
+                          classItem.availableSeats === 0 ||
+                          isAdmin ||
+                          isInstructor
+                        }>
+                        {isAdmin && "Admins cannot select classes"}
+                        {isInstructor && "Instructors cannot select classes"}
+                        {!isAdmin && !isInstructor && "Select"}
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </Fade>
           ))}
         </div>
       </div>

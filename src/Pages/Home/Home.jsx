@@ -4,6 +4,7 @@ import PopularClassesSection from "./PopularClassesSection";
 import InstructorsSection from "./InstructorsSection";
 import ExtraSection from "./ExtraSection";
 import { Helmet } from "react-helmet-async";
+import { Fade } from "react-awesome-reveal";
 
 const Home = () => {
   return (
@@ -11,10 +12,18 @@ const Home = () => {
       <Helmet>
         <title>Melody</title>
       </Helmet>
-      <Carousel />
-      <PopularClassesSection />
-      <InstructorsSection />
-      <ExtraSection />
+      <Fade>
+        <Carousel />
+      </Fade>
+      <Fade>
+        <PopularClassesSection />
+      </Fade>
+      <Fade>
+        <InstructorsSection />
+      </Fade>
+      <Fade>
+        <ExtraSection />
+      </Fade>
     </div>
   );
 };

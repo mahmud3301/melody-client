@@ -10,6 +10,7 @@ import { AuthContext } from "../../provider/AuthProvider";
 import { app } from "../../firebase/firebase.config";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
+import { Fade } from "react-awesome-reveal";
 
 const Login = () => {
   const auth = getAuth(app);
@@ -38,7 +39,6 @@ const Login = () => {
     signIn(email, password)
       .then((result) => {
         const loggedUser = result.user;
-        console.log(loggedUser);
         navigate(from || "/", { replace: true });
 
         Swal.fire({
@@ -49,7 +49,6 @@ const Login = () => {
         });
       })
       .catch((error) => {
-        console.log(error);
         setError("Invalid email or password");
       });
   };
@@ -74,7 +73,6 @@ const Login = () => {
           body: JSON.stringify(saveUser),
         })
           .then(() => {
-            console.log("Profile updated!");
             navigate(from || "/", { replace: true });
 
             Swal.fire({
@@ -85,7 +83,6 @@ const Login = () => {
             });
           })
           .catch((error) => {
-            console.log("Error updating profile:", error);
           });
       })
       .catch((error) => {
@@ -94,92 +91,104 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <Helmet>
-        <title>Melody | Login</title>
-      </Helmet>
-      <h1 data-aos="fade-down" className="text-5xl font-bold text-center mt-28">
-        <span className="text-primary">Login</span> now!
-      </h1>
-      <div className="hero bg-base-100">
-        <div className="hero-content mt-24 flex-col lg:flex-row-reverse">
-          <div data-aos="fade-left" className="text-center lg:text-left">
-            <p className="py-6">
-              <img className="w-96 mb-8" src={loginPng} alt="" />
-            </p>
-          </div>
-          <form
-            data-aos="fade-right"
-            className="w-full"
-            onSubmit={handleSubmit(handleLogin)}>
-            <div className="card flex-shrink-0 mr-0 lg:mr-16 shadow-2xl bg-base-100">
-              <div className="card-body">
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Email</span>
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    name="email"
-                    className="input input-bordered"
-                    {...register("email", { required: "Email is required" })}
-                  />
-                  {errors.email && (
-                    <p className="text-error">{errors.email.message}</p>
-                  )}
-                </div>
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Password</span>
-                  </label>
-                  <div className="relative">
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      name="password"
-                      placeholder="Password"
-                      className="input input-bordered w-full"
-                      {...register("password", {
-                        required: "Password is required",
-                      })}
-                    />
-                    <div
-                      className="absolute right-0 mr-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
-                      onClick={() => setShowPassword(!showPassword)}>
-                      {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
+    <>
+      <Fade>
+        <div>
+          <Helmet>
+            <title>Melody | Login</title>
+          </Helmet>
+          <h1
+            data-aos="fade-down"
+            className="text-5xl font-bold text-center mt-28">
+            <span className="text-primary">Login</span> now!
+          </h1>
+          <div className="hero bg-base-100">
+            <div className="hero-content mt-24 flex-col lg:flex-row-reverse">
+              <div data-aos="fade-left" className="text-center lg:text-left">
+                <p className="py-6">
+                  <img className="w-96 mb-8" src={loginPng} alt="" />
+                </p>
+              </div>
+              <form
+                data-aos="fade-right"
+                className="w-full"
+                onSubmit={handleSubmit(handleLogin)}>
+                <div className="card flex-shrink-0 mr-0 lg:mr-16 shadow-2xl bg-base-100">
+                  <div className="card-body">
+                    <div className="form-control">
+                      <label className="label">
+                        <span className="label-text">Email</span>
+                      </label>
+                      <input
+                        type="email"
+                        placeholder="Email"
+                        name="email"
+                        className="input input-bordered"
+                        {...register("email", {
+                          required: "Email is required",
+                        })}
+                      />
+                      {errors.email && (
+                        <p className="text-error">{errors.email.message}</p>
+                      )}
+                    </div>
+                    <div className="form-control">
+                      <label className="label">
+                        <span className="label-text">Password</span>
+                      </label>
+                      <div className="relative">
+                        <input
+                          type={showPassword ? "text" : "password"}
+                          name="password"
+                          placeholder="Password"
+                          className="input input-bordered w-full"
+                          {...register("password", {
+                            required: "Password is required",
+                          })}
+                        />
+                        <div
+                          className="absolute right-0 mr-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                          onClick={() => setShowPassword(!showPassword)}>
+                          {showPassword ? (
+                            <AiFillEye />
+                          ) : (
+                            <AiFillEyeInvisible />
+                          )}
+                        </div>
+                      </div>
+                      {errors.password && (
+                        <p className="text-error">{errors.password.message}</p>
+                      )}
+                    </div>
+
+                    <p className="mt-4">
+                      Don't have an account?{" "}
+                      <Link to="/register" className="link link-primary">
+                        Register
+                      </Link>
+                    </p>
+                    <p className="text-error mt-3 text-center">{error}</p>
+                    <div className="form-control mt-5">
+                      <button className="btn btn-primary">Login</button>
                     </div>
                   </div>
-                  {errors.password && (
-                    <p className="text-error">{errors.password.message}</p>
-                  )}
+                  <div className="divider">OR Login With</div>
+                  <div className="card-body justify-center mx-auto">
+                    <div>
+                      <button
+                        onClick={handleGoogleLogin}
+                        className="btn btn-primary">
+                        <FaGoogle />
+                      </button>
+                    </div>
+                  </div>
                 </div>
-
-                <p className="mt-4">
-                  Don't have an account?{" "}
-                  <Link to="/register" className="link link-primary">
-                    Register
-                  </Link>
-                </p>
-                <p className="text-error mt-3 text-center">{error}</p>
-                <div className="form-control mt-5">
-                  <button className="btn btn-primary">Login</button>
-                </div>
-              </div>
-              <div className="divider">OR Login With</div>
-              <div className="card-body justify-center mx-auto">
-                <div>
-                  <button
-                    onClick={handleGoogleLogin}
-                    className="btn btn-primary">
-                    <FaGoogle />
-                  </button>
-                </div>
-              </div>
+              </form>
             </div>
-          </form>
+          </div>
         </div>
-      </div>
-    </div>
+      </Fade>
+    </>
   );
 };
 
