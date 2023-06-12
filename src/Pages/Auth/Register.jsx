@@ -76,7 +76,7 @@ const Register = () => {
         const createdUser = userCredential.user;
         updateProfile(createdUser, { displayName: name, photoURL: url })
           .then(() => {
-            fetch("http://localhost:5000/user", {
+            fetch("https://summer-camp-server-gilt.vercel.app/user", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -115,7 +115,7 @@ const Register = () => {
           url: photoURL,
         };
 
-        fetch("http://localhost:5000/user", {
+        fetch("https://summer-camp-server-gilt.vercel.app/user", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

@@ -5,7 +5,7 @@ const PopularClassesSection = () => {
   const [topClasses, setTopClasses] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/classes")
+    fetch("https://summer-camp-server-gilt.vercel.app/classes")
       // fetch("classes.json")
       .then((res) => res.json())
       .then((data) => {

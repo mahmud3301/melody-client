@@ -10,7 +10,7 @@ const MyClasses = () => {
   const { user } = useContext(AuthContext);
   const [data, setData] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:5000/instructors-classes?email=${user.email}`)
+    fetch(`https://summer-camp-server-gilt.vercel.app/instructors-classes?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => setData(data));
     // .then((data) => console.log(data));

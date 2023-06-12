@@ -8,7 +8,7 @@ const InstructorsSection = () => {
   const [sortedInstructors, setSortedInstructors] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/instructors")
+    fetch("https://summer-camp-server-gilt.vercel.app/instructors")
       .then((res) => res.json())
       .then((data) => {
         if (data) {

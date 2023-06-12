@@ -17,7 +17,7 @@ const Classes = () => {
   const location = useLocation();
 
   useEffect(() => {
-    fetch("http://localhost:5000/approved-classes")
+    fetch("https://summer-camp-server-gilt.vercel.app/approved-classes")
       .then((res) => res.json())
       .then((data) => {
         if (data) {
@@ -39,7 +39,7 @@ const Classes = () => {
         image: classItem.image,
         email: user.email,
       };
-      fetch("http://localhost:5000/carts", {
+      fetch("https://summer-camp-server-gilt.vercel.app/carts", {
         method: "POST",
         headers: {
           "content-type": "application/json",

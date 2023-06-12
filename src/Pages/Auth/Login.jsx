@@ -65,7 +65,7 @@ const Login = () => {
           url: photoURL,
         };
 
-        fetch("http://localhost:5000/user", {
+        fetch("https://summer-camp-server-gilt.vercel.app/user", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
