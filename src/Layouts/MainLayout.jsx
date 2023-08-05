@@ -1,16 +1,20 @@
-import React from 'react';
-import Header from '../Shared/Header';
-import { Outlet } from 'react-router-dom';
-import Footer from '../Shared/Footer';
+import React from "react";
+import Header from "../Shared/Header";
+import { Outlet, useLocation } from "react-router-dom";
+import Footer from "../Shared/Footer";
 
 const MainLayout = () => {
+  const location = useLocation();
+  const noHeaderFooter =
+    location.pathname.includes("login") ||
+    location.pathname.includes("register");
   return (
     <div>
-      <Header/>
-      <div className='min-h-screen'>
-        <Outlet/>
+      {noHeaderFooter || <Header />}
+      <div className="min-h-screen">
+        <Outlet />
       </div>
-      <Footer/>
+      {noHeaderFooter || <Footer />}
     </div>
   );
 };

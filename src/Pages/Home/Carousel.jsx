@@ -1,32 +1,29 @@
 import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
+import "swiper/css/bundle";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper";
+import { Navigation, EffectFade, Autoplay } from "swiper";
 
 const Carousel = () => {
   return (
     <>
       <Swiper
-        cssMode={true}
-        navigation={true}
-        pagination={true}
-        mousewheel={true}
-        keyboard={true}
-        autoplay={{
-          delay: 500,
-        }}
-        modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+        slidesPerView={1}
+        loop
+        autoplay
+        speed={1000}
+        effect="fade"
+        modules={[EffectFade, Autoplay]}
         className="mySwiper">
-        <SwiperSlide>
+        <SwiperSlide className="text-primary">
           <div
             className="hero min-h-screen"
             style={{
-              backgroundImage: `url("https://images.unsplash.com/photo-1445985543470-41fba5c3144a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80")`,
+              backgroundImage: `url("https://images.unsplash.com/photo-1445985543470-41fba5c3144a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80")`
             }}>
-            <div className="hero-overlay bg-opacity-70"></div>
-            <div className="hero-content text-center text-neutral-content">
+            <div className="hero-overlay bg-opacity-30 bg-primary"></div>
+            <div className="hero-content text-center text-white">
               <div className="max-w-md">
                 <h1 className="mb-5 text-5xl font-bold">Sing</h1>
                 <p className="mb-5">
@@ -37,14 +34,14 @@ const Carousel = () => {
             </div>
           </div>
         </SwiperSlide>
-        <SwiperSlide>
+        <SwiperSlide className="text-primary">
           <div
             className="hero min-h-screen"
             style={{
-              backgroundImage: `url("https://images.unsplash.com/photo-1519139270028-ab664cf42264?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80")`,
+              backgroundImage: `url("https://images.unsplash.com/photo-1519139270028-ab664cf42264?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80")`
             }}>
-            <div className="hero-overlay bg-opacity-70"></div>
-            <div className="hero-content text-center text-neutral-content">
+            <div className="hero-overlay bg-opacity-30 bg-primary"></div>
+            <div className="hero-content text-center text-white">
               <div className="max-w-md">
                 <h1 className="mb-5 text-5xl font-bold">Explore</h1>
                 <p className="mb-5">
@@ -55,14 +52,14 @@ const Carousel = () => {
             </div>
           </div>
         </SwiperSlide>
-        <SwiperSlide>
+        <SwiperSlide className="text-primary">
           <div
             className="hero min-h-screen"
             style={{
-              backgroundImage: `url("https://images.unsplash.com/photo-1532956985363-fb868d867e67?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80")`,
+              backgroundImage: `url("https://images.unsplash.com/photo-1532956985363-fb868d867e67?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80")`
             }}>
-            <div className="hero-overlay bg-opacity-70"></div>
-            <div className="hero-content text-center text-neutral-content">
+            <div className="hero-overlay bg-opacity-30 bg-primary"></div>
+            <div className="hero-content text-center text-white">
               <div className="max-w-md">
                 <h1 className="mb-5 text-5xl font-bold">Fun</h1>
                 <p className="mb-5">
@@ -73,14 +70,14 @@ const Carousel = () => {
             </div>
           </div>
         </SwiperSlide>
-        <SwiperSlide>
+        <SwiperSlide className="text-primary">
           <div
             className="hero min-h-screen"
             style={{
-              backgroundImage: `url("https://images.unsplash.com/photo-1575314113965-c6672a42b99c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80")`,
+              backgroundImage: `url("https://images.unsplash.com/photo-1575314113965-c6672a42b99c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80")`
             }}>
-            <div className="hero-overlay bg-opacity-70"></div>
-            <div className="hero-content text-center text-neutral-content">
+            <div className="hero-overlay bg-opacity-30 bg-primary"></div>
+            <div className="hero-content text-center text-white">
               <div className="max-w-md">
                 <h1 className="mb-5 text-5xl font-bold">Enjoy</h1>
                 <p className="mb-5">

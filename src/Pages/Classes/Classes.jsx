@@ -17,7 +17,7 @@ const Classes = () => {
   const location = useLocation();
 
   useEffect(() => {
-    fetch("https://summer-camp-server-gilt.vercel.app/approved-classes")
+    fetch("http://localhost:5000/approved-classes")
       .then((res) => res.json())
       .then((data) => {
         if (data) {
@@ -39,7 +39,7 @@ const Classes = () => {
         image: classItem.image,
         email: user.email,
       };
-      fetch("https://summer-camp-server-gilt.vercel.app/carts", {
+      fetch("http://localhost:5000/carts", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -87,7 +87,7 @@ const Classes = () => {
                   className={`card w-full ${
                     classItem.availableSeats === 0
                       ? "bg-error"
-                      : "glass bg-base-200"
+                      : "bg-base-200"
                   }`}>
                   <figure>
                     <img
@@ -115,7 +115,7 @@ const Classes = () => {
                       {classItem.students}
                     </p>
                     <p>
-                      <span className="underline font-medium">Rate</span>: $
+                      <span className="underline font-medium">Price</span>: $
                       {classItem.price}
                     </p>
                     <div className="card-actions justify-end">

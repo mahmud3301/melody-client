@@ -5,6 +5,11 @@ import InstructorsSection from "./InstructorsSection";
 import ExtraSection from "./ExtraSection";
 import { Helmet } from "react-helmet-async";
 import { Fade } from "react-awesome-reveal";
+import Services from "./Services";
+import SayUs from "./SayUs";
+import OtherTopicQue from "./OtherTopicQue";
+import Faq from "../../Shared/Faq";
+import SubscribeUs from "../../Shared/SubscribeUs";
 
 const Home = () => {
   return (
@@ -23,6 +28,21 @@ const Home = () => {
       </Fade>
       <Fade>
         <ExtraSection />
+      </Fade>
+      <Fade>
+        <Services />
+      </Fade>
+      <Fade>
+        <SayUs/>
+      </Fade>
+      <Fade>
+        <Faq/>
+      </Fade>
+      <Fade>
+        <OtherTopicQue/>
+      </Fade>
+      <Fade>
+        <SubscribeUs/>
       </Fade>
     </div>
   );

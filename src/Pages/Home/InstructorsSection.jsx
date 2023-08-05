@@ -8,7 +8,7 @@ const InstructorsSection = () => {
   const [sortedInstructors, setSortedInstructors] = useState([]);
 
   useEffect(() => {
-    fetch("https://summer-camp-server-gilt.vercel.app/instructors")
+    fetch("http://localhost:5000/instructors")
       .then((res) => res.json())
       .then((data) => {
         if (data) {
@@ -27,34 +27,22 @@ const InstructorsSection = () => {
       <h2 className="text-3xl text-center font-bold my-14">
         Popular <span className="text-primary">Instructors</span>
       </h2>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 px-8 lg:px-36">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 md:grid-cols-3  px-8 lg:px-36">
         {sortedInstructors.map((instructor, index) => (
-          <div
-            key={index}
-            className="card grid grid-cols-1 md:grid-cols-2 glass bg-base-200 shadow-3xl group transition cursor-pointer">
-            <figure>
+          <div key={index} className="group transition cursor-pointer">
+            <div className="relative">
               <img
-                className="h-96 w-96 group-hover:scale-125 transition"
                 src={instructor.url}
                 alt={instructor.name}
+                className="w-full h-96 rounded p-4 "
               />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">{instructor.name}</h2>
-              <p>
-                <span className="font-semibold underline">Email</span>:{" "}
-                {instructor.email}
-              </p>
-              <p>
-                <span className="underline font-semibold">
-                  Number of Classes
-                </span>
-                : {instructor.numClasses}
-              </p>
-              <p>
-                <span className="underline font-semibold">Classes Taken</span>:{" "}
-                {instructor.classesTaken.join(", ")}
-              </p>
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition duration-300 bg-black bg-opacity-50 rounded">
+                <div className="text-white text-xl font-bold">
+                  <h2 className="text-2xl font-bold mb-2">{instructor.name}</h2>
+                  <br />
+                  <p>Email: {instructor.email}</p>
+                </div>
+              </div>
             </div>
           </div>
         ))}

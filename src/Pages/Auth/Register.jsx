@@ -4,7 +4,7 @@ import {
   GoogleAuthProvider,
   getAuth,
   signInWithPopup,
-  updateProfile,
+  updateProfile
 } from "firebase/auth";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { useForm } from "react-hook-form";
@@ -34,7 +34,7 @@ const Register = () => {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
+    watch
   } = useForm();
 
   useEffect(() => {
@@ -52,6 +52,7 @@ const Register = () => {
       name,
       url,
       email,
+      role: "student"
     };
     if (password.length < 6) {
       setPasswordError("Password must be at least 6 characters");
@@ -76,12 +77,12 @@ const Register = () => {
         const createdUser = userCredential.user;
         updateProfile(createdUser, { displayName: name, photoURL: url })
           .then(() => {
-            fetch("https://summer-camp-server-gilt.vercel.app/user", {
+            fetch("http://localhost:5000/user", {
               method: "POST",
               headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "application/json"
               },
-              body: JSON.stringify(saveUser),
+              body: JSON.stringify(saveUser)
             })
               .then(() => {
                 navigate(from || "/", { replace: true });
@@ -90,17 +91,14 @@ const Register = () => {
                   title: "User Created",
                   text: "Congratulations! Your account has been created successfully.",
                   icon: "success",
-                  confirmButtonText: "OK",
+                  confirmButtonText: "OK"
                 });
               })
-              .catch((error) => {
-              });
+              .catch((error) => {});
           })
-          .catch((error) => {
-          });
+          .catch((error) => {});
       })
-      .catch((error) => {
-      });
+      .catch((error) => {});
   };
 
   const handleGoogleRegister = () => {
@@ -113,14 +111,15 @@ const Register = () => {
           name: displayName,
           email,
           url: photoURL,
+          role: "student"
         };
 
-        fetch("https://summer-camp-server-gilt.vercel.app/user", {
+        fetch("http://localhost:5000/user", {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json"
           },
-          body: JSON.stringify(saveUser),
+          body: JSON.stringify(saveUser)
         })
           .then(() => {
             navigate(from || "/", { replace: true });
@@ -129,11 +128,10 @@ const Register = () => {
               title: "User Created",
               text: "Congratulations! Your account has been created successfully.",
               icon: "success",
-              confirmButtonText: "OK",
+              confirmButtonText: "OK"
             });
           })
-          .catch((error) => {
-          });
+          .catch((error) => {});
       })
       .catch((error) => {
         console.error(error);
@@ -152,189 +150,200 @@ const Register = () => {
 
   return (
     <>
-      <Fade>
-        <div>
-          <Helmet>
-            <title>Melody | Sign Up</title>
-          </Helmet>
-          <h1 className="text-5xl font-bold text-center mt-28">
-            <span className="text-primary">Register</span> now!
-          </h1>
-          <div className="hero bg-base-100 mb-24">
-            <div className="hero-content mt-24 flex-col lg:flex-row-reverse">
-              <div className="text-center lg:text-left">
-                <p className="w-full h-full">
-                  <img className="w-96 mb-8" src={registerPng} alt="" />
-                </p>
-              </div>
-              <form className="w-full" onSubmit={handleSubmit(handleRegister)}>
-                <div className="card flex-shrink-0 mr-0 lg:mr-16 shadow-2xl bg-base-100">
-                  <div className="card-body">
-                    <div className="form-control">
-                      <label className="label">
-                        <span className="label-text">Name</span>
-                      </label>
-                      <input
-                        type="text"
-                        {...register("name", { required: true })}
-                        placeholder="Name"
-                        className="input input-bordered"
-                      />
-                      {errors.name && (
-                        <span className="error-message text-error">
-                          Name is required
-                        </span>
-                      )}
-                    </div>
-                    <div className="form-control">
-                      <label className="label">
-                        <span className="label-text">Email</span>
-                      </label>
-                      <input
-                        type="email"
-                        {...register("email", { required: true })}
-                        placeholder="Email"
-                        className="input input-bordered"
-                      />
-                      {errors.email && (
-                        <span className="error-message text-error">
-                          Email is required
-                        </span>
-                      )}
-                    </div>
-                    <div className="form-control">
-                      <label className="label">
-                        <span className="label-text">Password</span>
-                      </label>
-                      <div className="relative">
-                        <input
-                          type={showPassword ? "text" : "password"}
-                          {...register("password", {
-                            required: true,
-                            minLength: 6,
-                          })}
-                          placeholder="Password"
-                          className={`input w-full input-bordered ${
-                            errors.password ? "input-error" : ""
-                          }`}
-                        />
-                        <div
-                          className="absolute right-0 mr-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
-                          onClick={handleShowPassword}>
-                          {showPassword ? (
-                            <AiFillEye />
-                          ) : (
-                            <AiFillEyeInvisible />
-                          )}
+      <div
+        className="hero min-h-screen"
+        style={{
+          backgroundImage: `url(https://render.fineartamerica.com/images/rendered/default/print/8/5.5/break/images-medium-5/acoustic-guitar-matt-gibson.jpg)`,
+        }}>
+        <div className="hero-overlay bg-primary bg-opacity-30"></div>
+        <div className="hero-content text-center text-neutral-content">
+          <div className="max-w-md">
+            <Fade>
+              <div className="text-white">
+                <Helmet>
+                  <title>Melody | Sign Up</title>
+                </Helmet>
+                <h1 className="text-5xl font-bold text-center mt-28">
+                  <span className="text-primary">Register</span> now!
+                </h1>
+                <div className="hero mb-24">
+                  <div className="mt-24 ">
+                    <form
+                      className="w-96"
+                      onSubmit={handleSubmit(handleRegister)}>
+                      <div className="card text-base-content flex-shrink-0 shadow-2xl bg-base-100">
+                        <div className="card-body">
+                          <div className="form-control">
+                            <label className="label">
+                              <span className="label-text">Name</span>
+                            </label>
+                            <input
+                              type="text"
+                              {...register("name", { required: true })}
+                              placeholder="Name"
+                              className="input input-bordered"
+                            />
+                            {errors.name && (
+                              <span className="error-message text-error">
+                                Name is required
+                              </span>
+                            )}
+                          </div>
+                          <div className="form-control">
+                            <label className="label">
+                              <span className="label-text">Email</span>
+                            </label>
+                            <input
+                              type="email"
+                              {...register("email", { required: true })}
+                              placeholder="Email"
+                              className="input input-bordered"
+                            />
+                            {errors.email && (
+                              <span className="error-message text-error">
+                                Email is required
+                              </span>
+                            )}
+                          </div>
+                          <div className="form-control">
+                            <label className="label">
+                              <span className="label-text">Password</span>
+                            </label>
+                            <div className="relative">
+                              <input
+                                type={showPassword ? "text" : "password"}
+                                {...register("password", {
+                                  required: true,
+                                  minLength: 6
+                                })}
+                                placeholder="Password"
+                                className={`input w-full input-bordered ${
+                                  errors.password ? "input-error" : ""
+                                }`}
+                              />
+                              <div
+                                className="absolute right-0 mr-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                                onClick={handleShowPassword}>
+                                {showPassword ? (
+                                  <AiFillEye />
+                                ) : (
+                                  <AiFillEyeInvisible />
+                                )}
+                              </div>
+                            </div>
+                            {errors.password && (
+                              <span className="error-message text-error">
+                                Password is required and must be at least 6
+                                characters long
+                              </span>
+                            )}
+                            {capitalLetterError && (
+                              <span className="error-message text-error">
+                                Password must contain at least one capital
+                                letter
+                              </span>
+                            )}
+                            {specialCharacterError && (
+                              <span className="error-message text-error">
+                                Password must contain at least one special
+                                character
+                              </span>
+                            )}
+                          </div>
+                          <div className="form-control">
+                            <div className="relative">{/* ... */}</div>
+                            {/* ... */}
+                          </div>
+                          <div className="form-control">
+                            <label className="label">
+                              <span className="label-text">
+                                Confirm Password
+                              </span>
+                            </label>
+                            <div className="relative">
+                              <input
+                                {...register("confirmPassword", {
+                                  required: true
+                                })}
+                                type={showPassword ? "text" : "password"}
+                                name="confirmPassword"
+                                placeholder="Confirm Password"
+                                className={`input input-bordered w-full ${
+                                  errors.confirmPassword ? "input-error" : ""
+                                }`}
+                                value={confirmPassword}
+                                onChange={handleConfirmPasswordChange}
+                              />
+                              <div
+                                className="absolute right-0 mr-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                                onClick={handleShowPassword}>
+                                {showPassword ? (
+                                  <AiFillEye />
+                                ) : (
+                                  <AiFillEyeInvisible />
+                                )}
+                              </div>
+                            </div>
+                            {errors.confirmPassword && (
+                              <span className="error-message text-error">
+                                Confirm Password is required
+                              </span>
+                            )}
+                            {passwordError && (
+                              <span className="error-message text-error">
+                                {passwordError}
+                              </span>
+                            )}
+                          </div>
+                          <div className="form-control">
+                            <label className="label">
+                              <span className="label-text">Photo Url</span>
+                            </label>
+                            <input
+                              type="url"
+                              {...register("url", {
+                                required: true
+                              })}
+                              placeholder="Photo Url"
+                              className="input input-bordered"
+                            />
+                            {errors.url && (
+                              <span className="error-message text-error">
+                                Photo Urls is required
+                              </span>
+                            )}
+                          </div>
+                          <p className="mt-4">
+                            Already have an account?{" "}
+                            <Link to="/login" className="link link-primary">
+                              Login
+                            </Link>
+                          </p>
+                          <div className="form-control mt-6">
+                            <button className="btn btn-primary">
+                              Register
+                            </button>
+                          </div>
+                          <div className="divider">OR Login With</div>
+                          <div className="card-body justify-center mx-auto">
+                            <div>
+                              <button
+                                onClick={handleGoogleRegister}
+                                className="btn btn-primary">
+                                <FaGoogle />
+                              </button>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      {errors.password && (
-                        <span className="error-message text-error">
-                          Password is required and must be at least 6 characters
-                          long
-                        </span>
-                      )}
-                      {capitalLetterError && (
-                        <span className="error-message text-error">
-                          Password must contain at least one capital letter
-                        </span>
-                      )}
-                      {specialCharacterError && (
-                        <span className="error-message text-error">
-                          Password must contain at least one special character
-                        </span>
-                      )}
-                    </div>
-                    <div className="form-control">
-                      <label className="label">
-                        <span className="label-text">Password</span>
-                      </label>
-                      <div className="relative">{/* ... */}</div>
-                      {/* ... */}
-                    </div>
-                    <div className="form-control">
-                      <label className="label">
-                        <span className="label-text">Confirm Password</span>
-                      </label>
-                      <div className="relative">
-                        <input
-                          {...register("confirmPassword", {
-                            required: true,
-                          })}
-                          type={showPassword ? "text" : "password"}
-                          name="confirmPassword"
-                          placeholder="Confirm Password"
-                          className={`input input-bordered w-full ${
-                            errors.confirmPassword ? "input-error" : ""
-                          }`}
-                          value={confirmPassword}
-                          onChange={handleConfirmPasswordChange}
-                        />
-                        <div
-                          className="absolute right-0 mr-4 top-1/2 transform -translate-y-1/2 cursor-pointer"
-                          onClick={handleShowPassword}>
-                          {showPassword ? (
-                            <AiFillEye />
-                          ) : (
-                            <AiFillEyeInvisible />
-                          )}
-                        </div>
-                      </div>
-                      {errors.confirmPassword && (
-                        <span className="error-message text-error">
-                          Confirm Password is required
-                        </span>
-                      )}
-                      {passwordError && (
-                        <span className="error-message text-error">
-                          {passwordError}
-                        </span>
-                      )}
-                    </div>
-                    <div className="form-control">
-                      <label className="label">
-                        <span className="label-text">Photo Url</span>
-                      </label>
-                      <input
-                        type="url"
-                        {...register("url", {
-                          required: true,
-                        })}
-                        placeholder="Photo Url"
-                        className="input input-bordered"
-                      />
-                      {errors.url && (
-                        <span className="error-message text-error">
-                          Photo Urls is required
-                        </span>
-                      )}
-                    </div>
-                    <p className="mt-4">
-                      Already have an account?{" "}
-                      <Link to="/login" className="link link-primary">
-                        Login
-                      </Link>
-                    </p>
-                    <div className="form-control mt-6">
-                      <button className="btn btn-primary">Register</button>
-                    </div>
-                    <div className="divider">OR Login With</div>
-                    <div className="card-body justify-center mx-auto">
-                      <div>
-                        <button
-                          onClick={handleGoogleRegister}
-                          className="btn btn-primary">
-                          <FaGoogle />
-                        </button>
-                      </div>
-                    </div>
+                    </form>
                   </div>
                 </div>
-              </form>
-            </div>
+              </div>
+            </Fade>
           </div>
         </div>
-      </Fade>
+      </div>
     </>
   );
 };

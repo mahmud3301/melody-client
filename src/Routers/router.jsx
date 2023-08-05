@@ -17,7 +17,9 @@ import AddAClass from "../Pages/Dashboard/AddAClass";
 import MyClasses from "../Pages/Dashboard/MyClasses";
 import InstructorRoute from "./InstructorRoute";
 import AdminRoute from "./AdminRoute";
-import Payment from "../Pages/Dashboard/Payment/Payment";
+import AboutUs from "../Pages/AboutUs/AboutUs";
+import Contract from "../Pages/Contracts/Contract";
+// import Payment from "../Pages/Dashboard/Payment/Payment";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +47,14 @@ const router = createBrowserRouter([
         path: "/classes",
         element: <Classes />,
       },
+      {
+        path: "/about-us",
+        element: <AboutUs />,
+      },
+      {
+        path: "/contract-us",
+        element: <Contract />,
+      },
     ],
   },
   {
@@ -52,7 +62,7 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoute>
         <DashboardLayout />
-      </PrivateRoute>
+      </PrivateRoute> 
     ),
     errorElement: <Error />,
     children: [
@@ -72,10 +82,10 @@ const router = createBrowserRouter([
         path: "my-enrolled-classes",
         element: <EnrolledClasses />,
       },
-      {
-        path: "payment/:id",
-        element: <Payment/>,
-      },
+      // {
+      //   path: "payment/:id",
+      //   element: <Payment/>,
+      // },
       {
         path: "all-users",
         element: (

@@ -23,7 +23,7 @@ const SelectedCourse = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://summer-camp-server-gilt.vercel.app/carts/${data._id}`, {
+        fetch(`http://localhost:5000/carts/${data._id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
